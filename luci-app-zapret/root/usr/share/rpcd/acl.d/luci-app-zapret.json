@@ -1,0 +1,18 @@
+{
+	"luci-app-zapret": {
+		"description": "Grant access to Zapret status and configuration",
+		"read": {
+			"ubus": {
+				"luci.zapret": [ "status", "get_list", "job_log", "get_log" ],
+				"network.interface": [ "dump" ]
+			},
+			"uci": [ "zapret", "network" ]
+		},
+		"write": {
+			"ubus": {
+				"luci.zapret": [ "service", "set_list", "job_start", "job_stop" ]
+			},
+			"uci": [ "zapret" ]
+		}
+	}
+}

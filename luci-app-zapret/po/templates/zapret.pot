@@ -1,0 +1,572 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-zapret\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+
+msgid "HTTP"
+msgstr ""
+
+msgid "HTTPS (TLS 1.2)"
+msgstr ""
+
+msgid "HTTPS (TLS 1.3)"
+msgstr ""
+
+msgid "QUIC (HTTP/3)"
+msgstr ""
+
+msgid "Select at least one test."
+msgstr ""
+
+msgid "Cannot start the test: %s"
+msgstr ""
+
+msgid "already running?"
+msgstr ""
+
+msgid "(no output yet)"
+msgstr ""
+
+msgid "Running..."
+msgstr ""
+
+msgid "Idle"
+msgstr ""
+
+msgid "quick - find something that works, fast"
+msgstr ""
+
+msgid "standard - more variants"
+msgstr ""
+
+msgid "force - everything, even if the site already works"
+msgstr ""
+
+msgid "Start test"
+msgstr ""
+
+msgid "Stop"
+msgstr ""
+
+msgid "Zapret: strategy test"
+msgstr ""
+
+msgid "Runs blockcheck.sh from zapret: it tries different nfqws/tpws strategies against the chosen domains and reports which of them work with your ISP."
+msgstr ""
+
+msgid "While the test is running, the zapret service is stopped (and started again afterwards). The test takes from minutes to over an hour."
+msgstr ""
+
+msgid "When it finishes, look for the SUMMARY section at the end of the log, and copy the working options into Settings → NFQWS (or TPWS)."
+msgstr ""
+
+msgid "Domains"
+msgstr ""
+
+msgid "Scan level"
+msgstr ""
+
+msgid "IP version"
+msgstr ""
+
+msgid "Tests"
+msgstr ""
+
+msgid "Output"
+msgstr ""
+
+msgid "My hostlist"
+msgstr ""
+
+msgid "Domains zapret should process in the hostlist / autohostlist / ipset modes. One domain per line; subdomains are included. Lines starting with # are comments."
+msgstr ""
+
+msgid "Exclusions"
+msgstr ""
+
+msgid "Domains that are never processed, even if they are in other lists (banks, government services, local resources)."
+msgstr ""
+
+msgid "IP ban list"
+msgstr ""
+
+msgid "Domains whose addresses are put to the \"ipban\" set, which custom scripts can use. Usually empty."
+msgstr ""
+
+msgid "Auto hostlist"
+msgstr ""
+
+msgid "Filled by nfqws/tpws in autohostlist mode with domains where blocking was detected. You can review or clean it here."
+msgstr ""
+
+msgid "List saved. Daemons were told to reload it. In ipset mode run \"Update lists now\" to resolve new domains to addresses."
+msgstr ""
+
+msgid "Cannot save the list: %s"
+msgstr ""
+
+msgid "Cannot start the list update (already running?)"
+msgstr ""
+
+msgid "The list cannot be loaded"
+msgstr ""
+
+msgid "Save list"
+msgstr ""
+
+msgid "Update lists now"
+msgstr ""
+
+msgid "Zapret: lists"
+msgstr ""
+
+msgid "Download lists"
+msgstr ""
+
+msgid "Runs the list script chosen in Settings → Lists and reloads the daemons when it finishes."
+msgstr ""
+
+msgid "zapret default (fake + multisplit / multidisorder)"
+msgstr ""
+
+msgid "TLS: multisplit with sequence overlap (no fooling)"
+msgstr ""
+
+msgid "TLS: multidisorder (no fake packets)"
+msgstr ""
+
+msgid "Expected a comma separated list of ports or ranges, e.g. 80,443,2053 or 443-65535"
+msgstr ""
+
+msgid "Expected a hexadecimal mask like 0x40000000"
+msgstr ""
+
+msgid "Load preset"
+msgstr ""
+
+msgid "Replaces the text below with a starting point. It is not applied until you press Save & Apply."
+msgstr ""
+
+msgid "-- choose --"
+msgstr ""
+
+msgid "Zapret"
+msgstr ""
+
+msgid "Settings are stored in /etc/config/zapret. On \"Save & Apply\" the zapret configuration is regenerated and the service is restarted if it is enabled."
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "NFQWS"
+msgstr ""
+
+msgid "TPWS"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
+
+msgid "Advanced"
+msgstr ""
+
+msgid "Enable zapret"
+msgstr ""
+
+msgid "Start the service at boot and apply changes on Save & Apply. The Start/Stop buttons on the Status page work independently of this switch."
+msgstr ""
+
+msgid "Filter mode"
+msgstr ""
+
+msgid "Which connections are processed. With \"none\" every connection to the selected ports is handled."
+msgstr ""
+
+msgid "none - all traffic"
+msgstr ""
+
+msgid "hostlist - only domains from the lists"
+msgstr ""
+
+msgid "autohostlist - lists + automatic detection of blocked domains"
+msgstr ""
+
+msgid "ipset - only IP addresses from the lists"
+msgstr ""
+
+msgid "LAN networks"
+msgstr ""
+
+msgid "Networks whose clients are processed (traffic from these networks going to the Internet)."
+msgstr ""
+
+msgid "Flow offloading"
+msgstr ""
+
+msgid "Flow offloading (fast path) bypasses the packet filter. \"donttouch\": leave the system setting as it is. Other values let zapret exclude the processed connections from offloading."
+msgstr ""
+
+msgid "donttouch"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "software"
+msgstr ""
+
+msgid "hardware"
+msgstr ""
+
+msgid "Disable IPv6"
+msgstr ""
+
+msgid "Do not process IPv6 traffic. Enable only if your ISP gives you a working IPv6 connection and you need it processed too."
+msgstr ""
+
+msgid "Disable IPv4"
+msgstr ""
+
+msgid "Enable nfqws"
+msgstr ""
+
+msgid "Packet modifier on top of NFQUEUE: sends fake/split packets to confuse DPI. Works for TCP and UDP (QUIC)."
+msgstr ""
+
+msgid "nfqws options"
+msgstr ""
+
+msgid "One profile per line, separated by --new. The &lt;HOSTLIST&gt; and &lt;HOSTLIST_NOAUTO&gt; markers are replaced according to the filter mode. See the nfqws documentation on GitHub for all options."
+msgstr ""
+
+msgid "TCP ports"
+msgstr ""
+
+msgid "Outgoing TCP ports redirected to nfqws."
+msgstr ""
+
+msgid "UDP ports"
+msgstr ""
+
+msgid "Outgoing UDP ports redirected to nfqws (443 = QUIC). Leave empty to disable UDP."
+msgstr ""
+
+msgid "TCP: packets to the server"
+msgstr ""
+
+msgid "Only this many first outgoing packets of a connection are passed to nfqws (kernel-side limit that saves CPU). Empty: zapret default."
+msgstr ""
+
+msgid "TCP: packets from the server"
+msgstr ""
+
+msgid "UDP: packets to the server"
+msgstr ""
+
+msgid "UDP: packets from the server"
+msgstr ""
+
+msgid "TCP ports without packet limit"
+msgstr ""
+
+msgid "Needed only for stateless DPI that inspects every packet (typically plain HTTP). CPU hungry: enable with care."
+msgstr ""
+
+msgid "UDP ports without packet limit"
+msgstr ""
+
+msgid "Enable tpws"
+msgstr ""
+
+msgid "Transparent TCP proxy: redirects connections to a local proxy that splits the stream. Does not need NFQUEUE; works only for TCP."
+msgstr ""
+
+msgid "tpws options"
+msgstr ""
+
+msgid "One profile per line, separated by --new. Empty: zapret default."
+msgstr ""
+
+msgid "Outgoing TCP ports redirected to tpws."
+msgstr ""
+
+msgid "Enable SOCKS proxy"
+msgstr ""
+
+msgid "Run tpws as a SOCKS5 proxy on localhost and LAN interfaces. Point applications or other devices at it manually."
+msgstr ""
+
+msgid "SOCKS port"
+msgstr ""
+
+msgid "SOCKS tpws options"
+msgstr ""
+
+msgid "Script that downloads/refreshes lists for the \"hostlist\" and \"ipset\" modes. Domain lists suit the hostlist modes, IP lists suit ipset mode."
+msgstr ""
+
+msgid "-- none --"
+msgstr ""
+
+msgid "Re-filter: domains"
+msgstr ""
+
+msgid "antizapret: domains"
+msgstr ""
+
+msgid "registry: domains that resolve"
+msgstr ""
+
+msgid "registry: pre-resolved IPs (smart)"
+msgstr ""
+
+msgid "registry: pre-resolved IPs"
+msgstr ""
+
+msgid "Re-filter: IP list (ipsum)"
+msgstr ""
+
+msgid "antifilter: ip"
+msgstr ""
+
+msgid "antifilter: ipsmart"
+msgstr ""
+
+msgid "antifilter: ipsum"
+msgstr ""
+
+msgid "antifilter: ipresolve"
+msgstr ""
+
+msgid "antifilter: allyouneed"
+msgstr ""
+
+msgid "only my own list (resolve domains to IPs)"
+msgstr ""
+
+msgid "only the IP ban list"
+msgstr ""
+
+msgid "Daily update hour"
+msgstr ""
+
+msgid "Hour of the day (0-23) when the lists are downloaded automatically. Empty: no automatic update."
+msgstr ""
+
+msgid "Compress lists"
+msgstr ""
+
+msgid "Store downloaded lists gzip-compressed (saves flash/RAM, slightly slower)."
+msgstr ""
+
+msgid "autohostlist: failure threshold"
+msgstr ""
+
+msgid "Number of failed connections within the time window after which a domain is added to the auto list."
+msgstr ""
+
+msgid "autohostlist: time window, s"
+msgstr ""
+
+msgid "autohostlist: retransmission threshold"
+msgstr ""
+
+msgid "autohostlist: debug log"
+msgstr ""
+
+msgid "Log automatically detected domains to zapret-hosts-auto-debug.log in the lists directory."
+msgstr ""
+
+msgid "Resolver threads"
+msgstr ""
+
+msgid "Parallel threads used to resolve domain lists to IP addresses."
+msgstr ""
+
+msgid "Firewall type"
+msgstr ""
+
+msgid "Normally autodetected. nftables (fw4) is the primary supported mode; iptables is for old fw3 systems."
+msgstr ""
+
+msgid "autodetect"
+msgstr ""
+
+msgid "Post-NAT mode (nftables)"
+msgstr ""
+
+msgid "Process packets after NAT (default). Pre-NAT mode lets debug logs show client addresses but disables some bypass techniques for forwarded traffic."
+msgstr ""
+
+msgid "Manage firewall rules"
+msgstr ""
+
+msgid "Let the service add/remove its firewall rules on start/stop."
+msgstr ""
+
+msgid "Drop ICMP time-exceeded"
+msgstr ""
+
+msgid "Drop ICMP \"time exceeded\" for connections modified by nfqws. Disable if traceroute/mtr is affected."
+msgstr ""
+
+msgid "WAN networks (IPv4)"
+msgstr ""
+
+msgid "By default these are the interfaces with an IPv4 default route."
+msgstr ""
+
+msgid "WAN networks (IPv6)"
+msgstr ""
+
+msgid "By default these are the interfaces with an IPv6 default route."
+msgstr ""
+
+msgid "Daemon user"
+msgstr ""
+
+msgid "Unprivileged user the nfqws/tpws processes switch to."
+msgstr ""
+
+msgid "NFQUEUE number"
+msgstr ""
+
+msgid "tpws transparent port"
+msgstr ""
+
+msgid "Desync mark"
+msgstr ""
+
+msgid "Packet mark used by nfqws to avoid loops."
+msgstr ""
+
+msgid "Desync mark (post-NAT)"
+msgstr ""
+
+msgid "Filter mark"
+msgstr ""
+
+msgid "If set, only packets carrying this mark are redirected to nfqws/tpws. Lets you restrict zapret with your own firewall rules."
+msgstr ""
+
+msgid "Temporary directory"
+msgstr ""
+
+msgid "Used while downloading lists. Set it if /tmp is too small."
+msgstr ""
+
+msgid "Extra configuration"
+msgstr ""
+
+msgid "Raw lines appended to the generated zapret config (shell syntax, VAR=\"value\"). Use it for variables that have no field here, e.g. IPSET_OPT or IP2NET_OPT4. Careful: wrong syntax prevents the service from starting."
+msgstr ""
+
+msgid "Command failed: %s"
+msgstr ""
+
+msgid "List update started in the background. See the Lists page for progress."
+msgstr ""
+
+msgid "Service"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
+msgid "Stopped"
+msgstr ""
+
+msgid "(enabled in settings)"
+msgstr ""
+
+msgid "(disabled in settings: will not start at boot)"
+msgstr ""
+
+msgid "zapret version"
+msgstr ""
+
+msgid "Enabled components"
+msgstr ""
+
+msgid "Firewall"
+msgstr ""
+
+msgid "rules active"
+msgstr ""
+
+msgid "no rules"
+msgstr ""
+
+msgid "Neither nfqws nor tpws is turned on, so there is nothing to start. Enable one of them in Settings."
+msgstr ""
+
+msgid "Start"
+msgstr ""
+
+msgid "Restart"
+msgstr ""
+
+msgid "Process"
+msgstr ""
+
+msgid "PID"
+msgstr ""
+
+msgid "Command line"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "stopped"
+msgstr ""
+
+msgid "No zapret processes are running"
+msgstr ""
+
+msgid "List"
+msgstr ""
+
+msgid "Entries"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Modified"
+msgstr ""
+
+msgid "Downloaded list (%s)"
+msgstr ""
+
+msgid "not configured"
+msgstr ""
+
+msgid "(empty)"
+msgstr ""
+
+msgid "Overview"
+msgstr ""
+
+msgid "Processes"
+msgstr ""
+
+msgid "System log (zapret)"
+msgstr ""
+
+msgid "Bypass of DPI-based blocking with nfqws and tpws. Configure it on the Settings page."
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Strategy test"
+msgstr ""
+
