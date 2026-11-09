@@ -138,8 +138,12 @@ run_in_docker() {
 	log "OpenWrt $OPENWRT_VERSION, платформа $TARGET"
 	fetch_sdk
 
-	log "Готовлю образ сборки ($image)"
-	docker build -q --platform linux/amd64 --build-arg "UID=$uid" -t "$image" - >/dev/null <<'EOF'
+	if docker image inspect "$image" >/dev/null 2>&1; then
+		log "Образ сборки $image уже готов"
+	else
+		log "Собираю образ сборки $image (один раз: 5-15 минут, под эмуляцией x86 - дольше;"
+		log "предупреждение 'legacy builder is deprecated' безобидно, вывод docker ниже - это нормально)"
+		docker build --platform linux/amd64 --build-arg "UID=$uid" -t "$image" - <<'EOF'
 FROM ubuntu:24.04
 ARG UID=1000
 ENV DEBIAN_FRONTEND=noninteractive
@@ -153,6 +157,7 @@ RUN (userdel -r ubuntu 2>/dev/null || true) && useradd -m -u "${UID}" builder \
 USER builder
 WORKDIR /src
 EOF
+	fi
 
 	args+=(--target "$TARGET" --openwrt "$OPENWRT_VERSION" --out /out --no-docker)
 	[ -n "$ZAPRET_VERSION" ] && args+=(--zapret-version "$ZAPRET_VERSION")
