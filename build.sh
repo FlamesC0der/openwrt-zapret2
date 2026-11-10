@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MIT
 #
-# Сборка пакетов zapret и luci-app-zapret для OpenWrt на официальном SDK.
+# Сборка пакетов zapret2 и luci-app-zapret2 для OpenWrt на официальном SDK.
 #
 # Что делает скрипт:
 #   1. определяет версию OpenWrt и скачивает для неё SDK (с проверкой sha256);
-#   2. кладёт в SDK пакеты из этого репозитория (zapret, luci-app-zapret);
-#   3. при сборке сам OpenWrt скачивает исходники zapret с
-#      https://github.com/bol-van/zapret (PKG_SOURCE_URL + проверка PKG_HASH);
-#   4. собирает nfqws/tpws/mdig/ip2net под архитектуру роутера и пакеты
+#   2. кладёт в SDK пакеты из этого репозитория (zapret2, luci-app-zapret2);
+#   3. при сборке сам OpenWrt скачивает исходники zapret2 с
+#      https://github.com/bol-van/zapret2 (PKG_SOURCE_URL + проверка PKG_HASH);
+#   4. собирает nfqws2/mdig/ip2net под архитектуру роутера и пакеты
 #      .ipk (OpenWrt <= 24.10) или .apk (OpenWrt >= 25.12) в каталог out/.
 #
 # Linux собирает напрямую; на macOS (и вообще где угодно) используйте --docker.
@@ -19,7 +19,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 OPENWRT_VERSION="stable"          # stable | oldstable | 25.12.6 | 24.10.8 | ...
 TARGET="x86/64"                   # target/subtarget роутера, см. https://downloads.openwrt.org
-ZAPRET_VERSION=""                 # пусто = версия, закреплённая в zapret/Makefile; latest | 72.13 | ...
+ZAPRET_VERSION=""                 # пусто = версия, закреплённая в zapret2/Makefile; latest | 1.0.7 | ...
 OUT_DIR="$ROOT/out"
 WORK_DIR="${WORK_DIR:-$ROOT/.build}"
 JOBS=""
@@ -35,8 +35,8 @@ usage() {
                                    примеры: x86/64, mediatek/filogic, ath79/generic,
                                    ramips/mt7621, rockchip/armv8, bcm27xx/bcm2711
   -v, --openwrt <версия>           stable (по умолчанию), oldstable или конкретная: 25.12.6, 24.10.8
-  -z, --zapret-version <версия>    версия zapret: latest или номер (72.13).
-                                   По умолчанию - закреплённая в zapret/Makefile (проверенная).
+  -z, --zapret-version <версия>    версия zapret2: latest или номер (1.0.7).
+                                   По умолчанию - закреплённая в zapret2/Makefile (проверенная).
   -o, --out <каталог>              куда положить готовые пакеты (по умолчанию: out/)
   -j, --jobs <N>                   число параллельных задач make (по умолчанию: число ядер)
       --docker                     собрать внутри Docker-контейнера (нужно на macOS)
@@ -150,7 +150,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential clang flex bison g++ gawk gettext git libncurses-dev libssl-dev \
         python3 python3-setuptools rsync swig unzip zlib1g-dev file wget curl ca-certificates \
-        zstd xz-utils xsltproc libelf-dev \
+        zstd xz-utils xsltproc libelf-dev gcc-multilib g++-multilib \
     && rm -rf /var/lib/apt/lists/*
 RUN (userdel -r ubuntu 2>/dev/null || true) && useradd -m -u "${UID}" builder \
     && mkdir -p /work /out && chown "${UID}" /work /out
@@ -212,7 +212,7 @@ cd "$SDK_DIR"
 
 # 3. наши пакеты кладём в SDK (исходников zapret здесь нет - их скачает сборка)
 log "Копирую пакеты из репозитория в SDK"
-for p in zapret luci-app-zapret; do
+for p in zapret2 luci-app-zapret2; do
 	rm -rf "package/$p"
 	mkdir -p "package/$p"
 	tar -C "$ROOT/$p" --exclude='.DS_Store' -cf - . | tar -C "package/$p" -xf -
@@ -224,56 +224,64 @@ resolve_zapret_version() {
 
 	if [ "$ZAPRET_VERSION" = latest ]; then
 		local tag
-		tag="$(curl -fsSL https://api.github.com/repos/bol-van/zapret/releases/latest |
+		tag="$(curl -fsSL https://api.github.com/repos/bol-van/zapret2/releases/latest |
 			sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p')"
-		[ -n "$tag" ] || die "не удалось узнать последнюю версию zapret на GitHub"
+		[ -n "$tag" ] || die "не удалось узнать последнюю версию zapret2 на GitHub"
 		ZAPRET_VERSION="${tag#v}"
 	else
 		ZAPRET_VERSION="${ZAPRET_VERSION#v}"
 	fi
 
 	local pinned
-	pinned="$(sed -n 's/^PKG_VERSION:=//p' package/zapret/Makefile)"
+	pinned="$(sed -n 's/^PKG_VERSION:=//p' package/zapret2/Makefile)"
 	if [ "$ZAPRET_VERSION" = "$pinned" ]; then
-		log "zapret $ZAPRET_VERSION - версия, закреплённая в Makefile"
+		log "zapret2 $ZAPRET_VERSION - версия, закреплённая в Makefile"
 		return 0
 	fi
 
-	warn "zapret $ZAPRET_VERSION отличается от проверенной ($pinned): скрипты upstream могли измениться"
-	log "Скачиваю zapret v$ZAPRET_VERSION с GitHub для расчёта хэша"
+	warn "zapret2 $ZAPRET_VERSION отличается от проверенной ($pinned): скрипты и Lua-библиотеки upstream могли измениться"
+	log "Скачиваю zapret2 v$ZAPRET_VERSION с GitHub для расчёта хэша"
 	mkdir -p dl
-	curl -fL --retry 3 -o "dl/zapret-$ZAPRET_VERSION.tar.gz" \
-		"https://codeload.github.com/bol-van/zapret/tar.gz/v$ZAPRET_VERSION" ||
-		die "нет релиза v$ZAPRET_VERSION в bol-van/zapret"
+	curl -fL --retry 3 -o "dl/zapret2-$ZAPRET_VERSION.tar.gz" \
+		"https://codeload.github.com/bol-van/zapret2/tar.gz/v$ZAPRET_VERSION" ||
+		die "нет релиза v$ZAPRET_VERSION в bol-van/zapret2"
 	local hash
-	hash="$(sha256_of "dl/zapret-$ZAPRET_VERSION.tar.gz")"
-	sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$ZAPRET_VERSION/; s/^PKG_HASH:=.*/PKG_HASH:=$hash/" package/zapret/Makefile
+	hash="$(sha256_of "dl/zapret2-$ZAPRET_VERSION.tar.gz")"
+	sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=$ZAPRET_VERSION/; s/^PKG_HASH:=.*/PKG_HASH:=$hash/" package/zapret2/Makefile
 }
 resolve_zapret_version
 
 # 5. feeds: base (libmnl, libnfnetlink, zlib, libcap, ca-bundle), packages (libnetfilter-queue,
-#    curl) и luci (luci.mk, luci-base). Ставим только нужные пакеты - зависимости подтянутся сами.
+#    luajit, curl) и luci (luci.mk, luci-base). Ставим только нужные пакеты - зависимости подтянутся сами.
 log "Обновляю feeds (base, packages, luci)"
-./scripts/feeds update base packages luci
-#    lua и csstidy - host-инструменты, которые требует luci.mk при сборке luci-приложений.
-./scripts/feeds install libnetfilter-queue libnfnetlink libmnl zlib libcap curl ca-bundle \
+# В SDK 24.10 feed base закреплён тегом (src-git-full ...;v24.10.8). При повторном запуске
+# git pull в detached HEAD печатает "You are not currently on a branch ... failed". Это безобидно,
+# но пугает: если base уже склонирован, обновлять нечего - достаточно пересоздать индекс (-i).
+if [ -d feeds/base/.git ]; then
+	./scripts/feeds update packages luci
+	./scripts/feeds update -i base
+else
+	./scripts/feeds update base packages luci
+fi
+# lua и csstidy - host-инструменты, которые требует luci.mk при сборке luci-приложений.
+./scripts/feeds install libnetfilter-queue libnfnetlink libmnl zlib libcap luajit curl ca-bundle \
 	luci-base lua csstidy
 
 # 6. конфигурация и сборка
 cat >> .config <<'EOF'
-CONFIG_PACKAGE_zapret=m
-CONFIG_PACKAGE_luci-app-zapret=m
-CONFIG_PACKAGE_luci-i18n-zapret-ru=m
+CONFIG_PACKAGE_zapret2=m
+CONFIG_PACKAGE_luci-app-zapret2=m
+CONFIG_PACKAGE_luci-i18n-zapret2-ru=m
 EOF
 make defconfig >/dev/null
 
 MAKE_V=""
 [ "$VERBOSE" = 1 ] && MAKE_V="V=s"
 
-log "Собираю (исходники zapret скачиваются автоматически)"
-if ! make package/zapret/compile package/luci-app-zapret/compile -j"$JOBS" $MAKE_V; then
+log "Собираю (исходники zapret2 скачиваются автоматически)"
+if ! make package/zapret2/compile package/luci-app-zapret2/compile -j"$JOBS" $MAKE_V; then
 	warn "сборка не удалась; повторяю в один поток с подробным выводом, чтобы показать ошибку"
-	make package/zapret/compile package/luci-app-zapret/compile -j1 V=s
+	make package/zapret2/compile package/luci-app-zapret2/compile -j1 V=s
 fi
 
 # 7. результат
@@ -284,14 +292,14 @@ while IFS= read -r f; do
 	log "  $(basename "$f")"
 	found=1
 done < <(find bin/packages bin/targets -type f \
-	\( -name 'zapret*.ipk' -o -name 'zapret*.apk' \
-	-o -name 'luci-app-zapret*.ipk' -o -name 'luci-app-zapret*.apk' \
-	-o -name 'luci-i18n-zapret*.ipk' -o -name 'luci-i18n-zapret*.apk' \) 2>/dev/null | sort)
+	\( -name 'zapret2*.ipk' -o -name 'zapret2*.apk' \
+	-o -name 'luci-app-zapret2*.ipk' -o -name 'luci-app-zapret2*.apk' \
+	-o -name 'luci-i18n-zapret2*.ipk' -o -name 'luci-i18n-zapret2*.apk' \) 2>/dev/null | sort)
 
 [ "$found" = 1 ] || die "готовых пакетов не найдено в bin/ - см. вывод сборки выше"
 
 log "Готово. Пакеты в $OUT_DIR"
 case "$(ls "$OUT_DIR" | head -n1)" in
-	*.apk) echo "  Установка на роутере:  apk add --allow-untrusted /tmp/zapret-*.apk /tmp/luci-app-zapret-*.apk /tmp/luci-i18n-zapret-ru-*.apk" ;;
-	*)     echo "  Установка на роутере:  opkg install /tmp/zapret_*.ipk /tmp/luci-app-zapret_*.ipk /tmp/luci-i18n-zapret-ru_*.ipk" ;;
+	*.apk) echo "  Установка на роутере:  apk add --allow-untrusted /tmp/zapret2-*.apk /tmp/luci-app-zapret2-*.apk /tmp/luci-i18n-zapret2-ru-*.apk" ;;
+	*)     echo "  Установка на роутере:  opkg install /tmp/zapret2_*.ipk /tmp/luci-app-zapret2_*.ipk /tmp/luci-i18n-zapret2-ru_*.ipk" ;;
 esac

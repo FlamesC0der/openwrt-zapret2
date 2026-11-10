@@ -1,0 +1,11 @@
+#@name: Discord + YouTube
+#@description: Default TLS and QUIC strategies plus UDP 50000-50100 (Discord voice and STUN) with matching fake packets from zapret2's files/fake.
+#@description.ru: Стратегии TLS и QUIC по умолчанию плюс UDP 50000-50100 (голос Discord и STUN) с подходящими фейками из files/fake zapret2.
+#@tcp_ports: 80,443
+#@udp_ports: 443,50000-50100
+--blob=discord_ipd:@<BASE>/files/fake/discord-ip-discovery-with-port.bin
+--blob=stun_fake:@<BASE>/files/fake/stun.bin
+--filter-tcp=80 --filter-l7=http <HOSTLIST> --payload=http_req --lua-desync=fake:blob=fake_default_http:tcp_md5 --lua-desync=multisplit:pos=method+2 --new
+--filter-tcp=443 --filter-l7=tls <HOSTLIST> --payload=tls_client_hello --lua-desync=fake:blob=fake_default_tls:tcp_md5:tcp_seq=-10000 --lua-desync=multidisorder:pos=1,midsld --new
+--filter-udp=443 --filter-l7=quic <HOSTLIST_NOAUTO> --payload=quic_initial --lua-desync=fake:blob=fake_default_quic:repeats=6 --new
+--filter-udp=50000-50100 --filter-l7=discord,stun --payload=stun --lua-desync=fake:blob=stun_fake:repeats=6 --payload=discord_ip_discovery --lua-desync=fake:blob=discord_ipd:repeats=6

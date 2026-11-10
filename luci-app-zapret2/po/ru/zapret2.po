@@ -1,0 +1,1107 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-zapret2\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "HTTP"
+msgstr "HTTP"
+
+msgid "HTTPS (TLS 1.2)"
+msgstr "HTTPS (TLS 1.2)"
+
+msgid "HTTPS (TLS 1.3)"
+msgstr "HTTPS (TLS 1.3)"
+
+msgid "QUIC (HTTP/3)"
+msgstr "QUIC (HTTP/3)"
+
+msgid "Select at least one test."
+msgstr "Выберите хотя бы один тест."
+
+msgid "Cannot start the test: %s"
+msgstr "Не удалось запустить тест: %s"
+
+msgid "already running?"
+msgstr "уже запущен?"
+
+msgid "(no output yet)"
+msgstr "(вывода пока нет)"
+
+msgid "Running..."
+msgstr "Выполняется..."
+
+msgid "Idle"
+msgstr "Не выполняется"
+
+msgid "veryquick - the fastest check"
+msgstr "veryquick — самая быстрая проверка"
+
+msgid "quick - find something that works, fast"
+msgstr "quick — быстро найти хоть что-то рабочее"
+
+msgid "standard - more variants"
+msgstr "standard — больше вариантов"
+
+msgid "force - everything, even if the site already works"
+msgstr "force — всё подряд, даже если сайт уже открывается"
+
+msgid "Start test"
+msgstr "Запустить тест"
+
+msgid "Stop"
+msgstr "Остановить"
+
+msgid "Zapret2: strategy test"
+msgstr "Zapret2: подбор стратегии"
+
+msgid "Runs blockcheck2.sh from zapret2: it tries different strategies against the chosen domains and reports which of them work with your ISP."
+msgstr "Запускает blockcheck2.sh из zapret2: перебирает стратегии для выбранных доменов и показывает, какие из них работают у вашего провайдера."
+
+msgid "While the test is running, the zapret2 service is stopped (and started again afterwards). The test takes from minutes to over an hour."
+msgstr "Пока идёт тест, сервис zapret2 остановлен (после теста он запускается снова). Тест длится от нескольких минут до часа и дольше."
+
+msgid "When it finishes, look for the SUMMARY section at the end of the log: the working options can be put into your own preset on the Presets page."
+msgstr "По окончании найдите раздел SUMMARY в конце лога: рабочие параметры можно оформить как свой пресет на странице «Пресеты»."
+
+msgid "Domains"
+msgstr "Домены"
+
+msgid "Scan level"
+msgstr "Уровень сканирования"
+
+msgid "IP version"
+msgstr "Версия IP"
+
+msgid "Tests"
+msgstr "Проверки"
+
+msgid "Output"
+msgstr "Вывод"
+
+msgid "Self-check"
+msgstr "Самопроверка"
+
+msgid "Your host"
+msgstr "Ваш хост"
+
+msgid "Detected"
+msgstr "Обнаружено"
+
+msgid "Probably"
+msgstr "Вероятно"
+
+msgid "Possible"
+msgstr "Возможно"
+
+msgid "Unlikely"
+msgstr "Маловероятно"
+
+msgid "Not detected"
+msgstr "Не обнаружено"
+
+msgid "Skipped"
+msgstr "Пропущено"
+
+msgid "Waiting"
+msgstr "Ожидание"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Unknown"
+msgstr "Неизвестно"
+
+msgid "Checking"
+msgstr "Проверяется"
+
+msgid "Cannot start the check: %s"
+msgstr "Не удалось запустить проверку: %s"
+
+msgid "it may be running already"
+msgstr "возможно, она уже выполняется"
+
+msgid "Enter a host name, for example example.com (no address, no port)."
+msgstr "Введите имя хоста, например example.com (без IP-адреса и порта)."
+
+msgid "zapret2 was running (strategy: %s)."
+msgstr "zapret2 был запущен (стратегия: %s)."
+
+msgid "zapret2 was stopped."
+msgstr "zapret2 был остановлен."
+
+msgid "Checking: %d of %d"
+msgstr "Проверка: %d из %d"
+
+msgid "The check was interrupted"
+msgstr "Проверка прервана"
+
+msgid "%d of %d hosts were checked."
+msgstr "Проверено хостов: %d из %d."
+
+msgid "TCP 16-20 blocking detected: %d of %d hosts"
+msgstr "Обнаружен обрыв TCP 16-20: %d из %d хостов"
+
+msgid "The provider cuts connections to these hosts after the first kilobytes of data."
+msgstr "Провайдер обрывает соединения с этими хостами после первых килобайт данных."
+
+msgid "Blocking is possible: %d of %d hosts"
+msgstr "Возможен обрыв TCP 16-20: %d из %d хостов"
+
+msgid "The connections ended with an error, not with a freeze: the result is not certain."
+msgstr "Соединения завершились ошибкой, а не зависанием: результат неточный."
+
+msgid "TCP 16-20 blocking is not detected"
+msgstr "Обрыв TCP 16-20 не обнаружен"
+
+msgid "Connections to the checked hosts carry 64 KiB without a freeze."
+msgstr "Через соединения с проверенными хостами проходит 64 КиБ без зависания."
+
+msgid "Preparing the check…"
+msgstr "Подготовка проверки…"
+
+msgid "The host list is being downloaded."
+msgstr "Скачивается список хостов."
+
+msgid "Provider (by the address of the router): AS%d %s"
+msgstr "Провайдер (по адресу роутера): AS%d %s"
+
+msgid "With zapret2"
+msgstr "С zapret2"
+
+msgid "Without zapret2"
+msgstr "Без zapret2"
+
+msgid "Provider"
+msgstr "Провайдер"
+
+msgid "Reachable"
+msgstr "Доступен"
+
+msgid "No results yet. Press \"Run the check\"."
+msgstr "Результатов пока нет. Нажмите «Запустить проверку»."
+
+msgid "(empty)"
+msgstr "(пусто)"
+
+msgid "Log of the check"
+msgstr "Журнал проверки"
+
+msgid "Run the check"
+msgstr "Запустить проверку"
+
+msgid "%d s"
+msgstr "%d с"
+
+msgid "Your host, e.g. example.com"
+msgstr "Свой хост, например example.com"
+
+msgid "Check this host"
+msgstr "Проверить этот хост"
+
+msgid "The service is stopped for the time of the second pass and started again."
+msgstr "На время второго прохода служба останавливается, затем запускается снова."
+
+msgid "Also check with zapret2 stopped"
+msgstr "Проверить ещё и при остановленном zapret2"
+
+msgid "Wait for an answer:"
+msgstr "Ждать ответ:"
+
+msgid "What is checked and how"
+msgstr "Что и как проверяется"
+
+msgid "Some providers cut a TCP connection to foreign hosting providers and CDNs after the client has sent 16-20 KB of data. Sites on such hosts open halfway, uploads stall, and nothing changes in the browser except the freeze."
+msgstr "Некоторые провайдеры обрывают TCP-соединение с зарубежными хостингами и CDN, когда клиент отправил 16–20 КБ данных. Сайты на таких хостах открываются наполовину, загрузки зависают, а в браузере, кроме зависания, ничего не меняется."
+
+msgid "For every host of the list the router checks that it answers, then sends 64 KiB to it: first one POST request, then ten requests with long addresses in a single connection. A connection that freezes means that the DPI of the provider cuts it."
+msgstr "Для каждого хоста из списка роутер проверяет, что он отвечает, затем отправляет ему 64 КиБ: сначала один POST-запрос, потом десять запросов с длинными адресами в одном соединении. Если соединение зависает, значит, DPI провайдера его обрывает."
+
+msgid "The check runs on the router, so its traffic goes through the zapret2 rules just like the traffic of your devices. Run it with zapret2 on and off (or tick the box below) to see whether the strategy changes anything."
+msgstr "Проверка выполняется на роутере, поэтому её трафик проходит через правила zapret2 так же, как трафик ваших устройств. Запустите её при включённом и при выключенном zapret2 (или отметьте галочку ниже), чтобы увидеть, меняет ли что-то стратегия."
+
+msgid "The list of hosts is taken from the dpi-checkers project at the start of each check. To show the provider, the public RIPE Stat service is asked for the autonomous system of the address of the router. Nothing else is sent anywhere."
+msgstr "Список хостов берётся из проекта dpi-checkers в начале каждой проверки. Чтобы показать провайдера, у публичного сервиса RIPE Stat запрашивается автономная система адреса роутера. Больше ничего никуда не отправляется."
+
+msgid "The original checker"
+msgstr "Оригинальная проверка"
+
+msgid "Discussion of the method"
+msgstr "Обсуждение метода"
+
+msgid "dpi-checkers repository"
+msgstr "Репозиторий dpi-checkers"
+
+msgid "Zapret2: diagnostics"
+msgstr "Zapret2: диагностика"
+
+msgid "Checks whether your provider cuts TCP connections after 16-20 KB of data (the \"TCP 16-20\" blocking)."
+msgstr "Проверяет, обрывает ли ваш провайдер TCP-соединения после 16–20 КБ данных (блокировка «TCP 16-20»)."
+
+msgid "Everything"
+msgstr "Всё"
+
+msgid "All traffic goes through zapret, except the sites in the bypass list."
+msgstr "Через zapret идёт весь трафик, кроме сайтов из списка «В обход zapret»."
+
+msgid "Only my list"
+msgstr "Только мой список"
+
+msgid "Only the sites from the \"Through zapret\" list (and downloaded lists) go through zapret. Everything else is left alone."
+msgstr "Через zapret идут только сайты из списка «Через zapret» (и скачанных списков). Всё остальное не затрагивается."
+
+msgid "My list + auto-detect"
+msgstr "Мой список + автоопределение"
+
+msgid "Like \"Only my list\", plus sites where blocking was detected automatically."
+msgstr "Как «Только мой список», плюс сайты, где блокировка была обнаружена автоматически."
+
+msgid "By IP address"
+msgstr "По IP-адресам"
+
+msgid "Match by the IP addresses of the lists (resolved by \"Update lists now\")."
+msgstr "Сопоставление по IP-адресам из списков (они определяются кнопкой «Обновить списки»)."
+
+msgid "My hostlist"
+msgstr "Мой список хостов"
+
+msgid "Exclusions"
+msgstr "Исключения"
+
+msgid "IP ban list"
+msgstr "Список IP-блокировок"
+
+msgid "Auto hostlist"
+msgstr "Автосписок хостов"
+
+msgid "Downloaded list"
+msgstr "Скачанный список"
+
+msgid "Domains zapret2 should process in the hostlist / autohostlist / ipset modes. One domain per line; subdomains are included. Lines starting with # are comments."
+msgstr "Домены, которые zapret2 должен обрабатывать в режимах hostlist / autohostlist / ipset. Один домен в строке, поддомены включаются автоматически. Строки, начинающиеся с #, — комментарии."
+
+msgid "Domains that are never processed, even if they are in other lists (banks, government services, local resources)."
+msgstr "Домены, которые никогда не обрабатываются, даже если есть в других списках (банки, госуслуги, локальные ресурсы)."
+
+msgid "Domains whose addresses are put to the \"ipban\" set, which custom scripts can use. Usually empty."
+msgstr "Домены, адреса которых помещаются в набор «ipban» для пользовательских скриптов. Обычно пуст."
+
+msgid "Filled by nfqws2 in autohostlist mode with domains where blocking was detected. You can review or clean it here."
+msgstr "Заполняется nfqws2 в режиме autohostlist доменами, для которых обнаружена блокировка. Здесь его можно просмотреть или очистить."
+
+msgid "Produced by the list script chosen in Settings → Lists. It is replaced on every update, so it is read-only."
+msgstr "Создаётся скриптом, выбранным в Настройки → Списки. Заменяется при каждом обновлении, поэтому доступен только для чтения."
+
+msgid "A downloaded list. Your manual changes are overwritten by the next download; remove the URL to keep a list local."
+msgstr "Скачиваемый список. Ручные правки будут перезаписаны при следующей загрузке; чтобы список остался локальным, уберите URL."
+
+msgid "Your own list. Use it in presets as <LIST:%s>."
+msgstr "Ваш список. В пресетах используется как <LIST:%s>."
+
+msgid "List"
+msgstr "Список"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Entries"
+msgstr "Записей"
+
+msgid "Size"
+msgstr "Размер"
+
+msgid "Modified"
+msgstr "Изменён"
+
+msgid "Open"
+msgstr "Открыть"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "IP addresses"
+msgstr "IP-адреса"
+
+msgid "domains"
+msgstr "домены"
+
+msgid "Cannot change the mode: %s"
+msgstr "Не удалось сменить режим: %s"
+
+msgid "The mode was changed, nfqws2 was restarted."
+msgstr "Режим изменён, nfqws2 перезапущен."
+
+msgid "The mode was changed. It will be used the next time the service starts."
+msgstr "Режим изменён. Он будет применён при следующем запуске службы."
+
+msgid "What goes through zapret?"
+msgstr "Что пускать через zapret?"
+
+msgid "Not used right now: in the \"Everything\" mode all traffic is processed anyway. Choose \"Only my list\" above to use this list."
+msgstr "Сейчас не используется: в режиме «Всё» через zapret и так идёт весь трафик. Выберите выше «Только мой список», чтобы использовать этот список."
+
+msgid "Run \"Update lists now\" after changes: the domains are resolved to IP addresses."
+msgstr "После изменений нажмите «Обновить списки»: домены преобразуются в IP-адреса."
+
+msgid "Through zapret"
+msgstr "Через zapret"
+
+msgid "Sites that should go through zapret."
+msgstr "Сайты, которые должны идти через zapret."
+
+msgid "Bypass zapret"
+msgstr "В обход zapret"
+
+msgid "Sites that never go through zapret, in any mode. IP addresses and subnets (10.0.0.0/8) work too."
+msgstr "Сайты, которые никогда не идут через zapret, в любом режиме. Можно указывать и IP-адреса, и подсети (10.0.0.0/8)."
+
+msgid "Add a site, e.g. example.com"
+msgstr "Добавить сайт, например example.com"
+
+msgid "%d entries"
+msgstr "Записей: %d"
+
+msgid "List saved. nfqws2 was told to reload it."
+msgstr "Список сохранён. nfqws2 получил команду перечитать его."
+
+msgid "Cannot save the list: %s"
+msgstr "Не удалось сохранить список: %s"
+
+msgid "This does not look like a domain name or an IP address."
+msgstr "Это не похоже на доменное имя или IP-адрес."
+
+msgid "\"%s\" is already in the list."
+msgstr "«%s» уже есть в списке."
+
+msgid "The list is too large to edit here. Use the viewer below."
+msgstr "Список слишком велик для редактирования здесь. Используйте просмотр ниже."
+
+msgid "The list cannot be loaded"
+msgstr "Список не удалось загрузить"
+
+msgid "Add"
+msgstr "Добавить"
+
+msgid "Save list"
+msgstr "Сохранить список"
+
+msgid "Display name (optional)"
+msgstr "Отображаемое имя (необязательно)"
+
+msgid "domains (hostlist)"
+msgstr "домены (hostlist)"
+
+msgid "IP addresses / subnets (ipset)"
+msgstr "IP-адреса / подсети (ipset)"
+
+msgid "List settings"
+msgstr "Параметры списка"
+
+msgid "Add list"
+msgstr "Добавить список"
+
+msgid "The list is stored in /etc/zapret2/lists/<id>.txt and is used in presets as <LIST:id>. If a URL is given, it is downloaded by \"Update lists\" and by the daily update."
+msgstr "Список хранится в /etc/zapret2/lists/<id>.txt и используется в пресетах как <LIST:id>. Если указан URL, список скачивается по кнопке «Обновить списки» и при ежедневном обновлении."
+
+msgid "Id"
+msgstr "Идентификатор"
+
+msgid "Title"
+msgstr "Название"
+
+msgid "Download URL"
+msgstr "URL для загрузки"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "The id may only contain a-z, 0-9 and \"_\" (up to 40 characters)."
+msgstr "Идентификатор может содержать только a-z, 0-9 и «_» (до 40 символов)."
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Delete list"
+msgstr "Удалить список"
+
+msgid "Delete the list \"%s\" and its file? Presets that use <LIST:%s> will get an empty list."
+msgstr "Удалить список «%s» и его файл? Пресеты, использующие <LIST:%s>, получат пустой список."
+
+msgid "Search..."
+msgstr "Поиск..."
+
+msgid "Search"
+msgstr "Найти"
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "(no matching lines)"
+msgstr "(подходящих строк нет)"
+
+msgid "%d-%d of %d matches (%d lines total)"
+msgstr "%d–%d из %d совпадений (всего строк: %d)"
+
+msgid "%d-%d of %d"
+msgstr "%d–%d из %d"
+
+msgid "The list is too large to edit in the browser (%s). You can still view and search it."
+msgstr "Список слишком велик для редактирования в браузере (%s). Его по-прежнему можно просматривать и искать в нём."
+
+msgid "Cannot load the list: %s"
+msgstr "Не удалось загрузить список: %s"
+
+msgid "List saved. nfqws2 was told to reload it. In ipset mode run \"Update lists now\" to resolve new domains to addresses."
+msgstr "Список сохранён, nfqws2 отправлен сигнал перечитать его. В режиме ipset нажмите «Обновить списки», чтобы преобразовать новые домены в адреса."
+
+msgid "Cannot start the list update (already running?)"
+msgstr "Не удалось запустить обновление списков (уже выполняется?)"
+
+msgid "Update lists now"
+msgstr "Обновить списки"
+
+msgid "Zapret2: lists"
+msgstr "Zapret2: списки"
+
+msgid "Choose what goes through zapret and what bypasses it. Changes apply immediately."
+msgstr "Выберите, что идёт через zapret, а что в обход него. Изменения применяются сразу."
+
+msgid "Other lists"
+msgstr "Другие списки"
+
+msgid "Downloaded and your own lists. Open a list to view, search and (when it is small enough) edit it. Your own lists can be downloaded from a URL."
+msgstr "Скачанные и ваши собственные списки. Откройте список, чтобы посмотреть его, найти запись и (если он не слишком большой) отредактировать. Собственные списки можно скачивать по URL."
+
+msgid "Update log"
+msgstr "Журнал обновления"
+
+msgid "built-in"
+msgstr "встроенный"
+
+msgid "downloaded"
+msgstr "скачанный"
+
+msgid "mine"
+msgstr "мой"
+
+msgid "The preset \"%s\" contains custom Lua code that will run inside nfqws2. Activate it only if you trust its source. Activate?"
+msgstr "Пресет «%s» содержит собственный Lua-код, который будет выполняться внутри nfqws2. Включайте его, только если доверяете источнику. Включить?"
+
+msgid "The preset \"%s\" needs these lists. They are added to the Lists page and downloaded now and then every day:"
+msgstr "Пресету «%s» нужны эти списки. Они будут добавлены на страницу «Списки» и скачаны сейчас, а затем будут обновляться каждый день:"
+
+msgid "Preset with custom Lua code"
+msgstr "Пресет с собственным Lua-кодом"
+
+msgid "Preset with lists"
+msgstr "Пресет со списками"
+
+msgid "Activate"
+msgstr "Включить"
+
+msgid "Cannot activate the preset: %s"
+msgstr "Не удалось включить пресет: %s"
+
+msgid "The preset is active, nfqws2 was restarted."
+msgstr "Пресет включён, nfqws2 перезапущен."
+
+msgid "The preset is selected. It will be used the next time the service starts."
+msgstr "Пресет выбран. Он будет использован при следующем запуске сервиса."
+
+msgid "Added lists: %s. They are being downloaded, the progress is shown on the Lists page."
+msgstr "Добавлены списки: %s. Они скачиваются, ход загрузки виден на странице «Списки»."
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "The id may only contain a-z, 0-9, \"-\" and \"_\" (up to 40 characters)."
+msgstr "Идентификатор может содержать только a-z, 0-9, «-» и «_» (до 40 символов)."
+
+msgid "Cannot save the preset: %s"
+msgstr "Не удалось сохранить пресет: %s"
+
+msgid "Preset id"
+msgstr "Идентификатор пресета"
+
+msgid "Edit preset"
+msgstr "Изменение пресета"
+
+msgid "Preset (read-only)"
+msgstr "Пресет (только чтение)"
+
+msgid "This preset replaces the %s preset with the same id. Delete it to get the original back."
+msgstr "Этот пресет заменяет пресет «%s» с тем же идентификатором. Удалите его, чтобы вернуть оригинал."
+
+msgid "Built-in and downloaded presets cannot be edited. Use \"Copy\" to make your own version."
+msgstr "Встроенные и скачанные пресеты изменять нельзя. Нажмите «Копировать», чтобы сделать свою версию."
+
+msgid "Copy preset"
+msgstr "Копирование пресета"
+
+msgid "Choose an id for your copy and edit the options. It will appear in the list as your own preset."
+msgstr "Выберите идентификатор для копии и измените параметры. Она появится в списке как ваш пресет."
+
+msgid "New preset"
+msgstr "Новый пресет"
+
+msgid "Lines starting with #@ are the preset description; the rest are nfqws2 options."
+msgstr "Строки, начинающиеся с #@, — описание пресета; остальное — параметры nfqws2."
+
+msgid "Delete preset"
+msgstr "Удаление пресета"
+
+msgid "Delete your preset \"%s\"?"
+msgstr "Удалить ваш пресет «%s»?"
+
+msgid "Cannot start the download (already running?)"
+msgstr "Не удалось запустить загрузку (уже выполняется?)"
+
+msgid "Use"
+msgstr "Включить"
+
+msgid "View"
+msgstr "Просмотр"
+
+msgid "Copy"
+msgstr "Копировать"
+
+msgid "Restore original"
+msgstr "Вернуть оригинал"
+
+msgid "active"
+msgstr "активен"
+
+msgid "custom Lua"
+msgstr "свой Lua-код"
+
+msgid "Lists: %s"
+msgstr "Списки: %s"
+
+msgid "Source: %s"
+msgstr "Источник: %s"
+
+msgid "Sources:"
+msgstr "Источники:"
+
+msgid "No download source is configured. Add a preset URL in"
+msgstr "Источник загрузки не задан. Добавьте URL пресетов в разделе"
+
+msgid "Presets"
+msgstr "Пресеты"
+
+msgid "Zapret2: presets"
+msgstr "Zapret2: пресеты"
+
+msgid "A preset is a ready-made set of nfqws2 options (a strategy). Switch between them to find what works with your ISP, or make your own."
+msgstr "Пресет — готовый набор параметров nfqws2 (стратегия). Переключайтесь между ними, чтобы найти работающий у вашего провайдера, или сделайте свой."
+
+msgid "The active preset is applied immediately; if the service is running, nfqws2 is restarted."
+msgstr "Включённый пресет применяется сразу; если сервис запущен, nfqws2 перезапускается."
+
+msgid "Download presets"
+msgstr "Скачать пресеты"
+
+msgid "A preset can contain Lua code that runs inside nfqws2. Download presets only from sources you trust, preferably over https."
+msgstr "Пресет может содержать Lua-код, выполняемый внутри nfqws2. Скачивайте пресеты только из источников, которым доверяете, желательно по https."
+
+msgid "Preset file format"
+msgstr "Формат файла пресета"
+
+msgid "A preset is a text file. Header lines have the form \"#@key: value\": name, description, description.ru, tcp_ports, udp_ports (ports redirected to nfqws2), and optionally tcp_pkt_out, tcp_pkt_in, udp_pkt_out, udp_pkt_in."
+msgstr "Пресет — текстовый файл. Строки заголовка имеют вид «#@ключ: значение»: name, description, description.ru, tcp_ports, udp_ports (порты, перенаправляемые в nfqws2) и, при необходимости, tcp_pkt_out, tcp_pkt_in, udp_pkt_out, udp_pkt_in."
+
+msgid "All other lines (except comments starting with #) are nfqws2 options. Placeholders: <HOSTLIST> and <HOSTLIST_NOAUTO> (replaced according to the filter mode), <LIST:name> (path of your list \"name\", see the Lists page), <BASE> (zapret2 files, e.g. <BASE>/files/fake/stun.bin). An option cannot contain spaces: put Lua code into a file and pass it as --lua-init=@<RW>/lua/file.lua (<RW> is /etc/zapret2)."
+msgstr "Все остальные строки (кроме комментариев, начинающихся с #) — параметры nfqws2. Подстановки: <HOSTLIST> и <HOSTLIST_NOAUTO> (заменяются в соответствии с режимом фильтрации), <LIST:имя> (путь к вашему списку «имя», см. страницу «Списки»), <BASE> (файлы zapret2, например <BASE>/files/fake/stun.bin). Параметр не может содержать пробелов: Lua-код положите в файл и передайте как --lua-init=@<RW>/lua/файл.lua (<RW> — это /etc/zapret2)."
+
+msgid "A line \"#@list: id hosts|ips URL title\" declares a list that the preset needs: it is added on the Lists page and downloaded when the preset is activated, and then every day."
+msgstr "Строка «#@list: id hosts|ips URL название» объявляет список, который нужен пресету: при включении пресета он добавляется на страницу «Списки» и скачивается, а затем обновляется каждый день."
+
+msgid "A download source is a text file with presets one after another, each starting with a line \"#@id: some-id\"; a file without such lines is treated as a single preset named after the file."
+msgstr "Источник загрузки — текстовый файл с пресетами подряд, каждый начинается со строки «#@id: какой-то-id»; файл без таких строк считается одним пресетом, названным по имени файла."
+
+msgid "Expected a comma separated list of ports or ranges, e.g. 80,443,2053 or 443-65535"
+msgstr "Ожидается список портов или диапазонов через запятую, например 80,443,2053 или 443-65535"
+
+msgid "Expected a hexadecimal mask like 0x40000000"
+msgstr "Ожидается шестнадцатеричная маска вида 0x40000000"
+
+msgid "Expected an http or https URL without spaces or quotes"
+msgstr "Ожидается URL с http или https без пробелов и кавычек"
+
+msgid "Zapret2"
+msgstr "Zapret2"
+
+msgid "Settings are stored in /etc/config/zapret2. On \"Save & Apply\" the zapret2 configuration is regenerated and the service is restarted if it is enabled."
+msgstr "Настройки хранятся в /etc/config/zapret2. При «Сохранить и применить» конфигурация zapret2 генерируется заново, а сервис перезапускается, если он включён."
+
+msgid "General"
+msgstr "Общие"
+
+msgid "nfqws2"
+msgstr "nfqws2"
+
+msgid "Lists"
+msgstr "Списки"
+
+msgid "Updates"
+msgstr "Обновления"
+
+msgid "Advanced"
+msgstr "Дополнительно"
+
+msgid "Enable zapret2"
+msgstr "Включить zapret2"
+
+msgid "Start the service at boot and apply changes on Save & Apply. The Start/Stop buttons on the Status page work independently of this switch."
+msgstr "Запускать сервис при загрузке и применять изменения по «Сохранить и применить». Кнопки «Запустить»/«Остановить» на странице состояния работают независимо от этого переключателя."
+
+msgid "Active preset"
+msgstr "Активный пресет"
+
+msgid "The strategy that nfqws2 uses. You can also switch it, view and edit presets on the Presets page."
+msgstr "Стратегия, которую использует nfqws2. Переключать, просматривать и изменять пресеты можно и на странице «Пресеты»."
+
+msgid "Filter mode"
+msgstr "Режим фильтрации"
+
+msgid "Which connections are processed by the &lt;HOSTLIST&gt; parts of a preset. With \"none\" every connection to the selected ports is handled."
+msgstr "Какие соединения обрабатываются частями пресета с &lt;HOSTLIST&gt;. При «none» обрабатываются все соединения на выбранные порты."
+
+msgid "none - all traffic"
+msgstr "none — весь трафик"
+
+msgid "hostlist - only domains from the lists"
+msgstr "hostlist — только домены из списков"
+
+msgid "autohostlist - lists + automatic detection of blocked domains"
+msgstr "autohostlist — списки + автоопределение блокируемых доменов"
+
+msgid "ipset - only IP addresses from the lists"
+msgstr "ipset — только IP-адреса из списков"
+
+msgid "LAN networks"
+msgstr "LAN-сети"
+
+msgid "Networks whose clients are processed (traffic from these networks going to the Internet)."
+msgstr "Сети, клиенты которых обрабатываются (трафик из этих сетей в Интернет)."
+
+msgid "Flow offloading"
+msgstr "Flow offloading"
+
+msgid "Flow offloading (fast path) bypasses the packet filter. \"donttouch\": leave the system setting as it is. Other values let zapret2 exclude the processed connections from offloading."
+msgstr "Flow offloading (быстрый путь) обходит фильтр пакетов. «donttouch» — не менять системную настройку. Остальные значения позволяют zapret2 исключать обрабатываемые соединения из offloading."
+
+msgid "donttouch"
+msgstr "donttouch"
+
+msgid "none"
+msgstr "нет"
+
+msgid "software"
+msgstr "software"
+
+msgid "hardware"
+msgstr "hardware"
+
+msgid "Disable IPv6"
+msgstr "Отключить IPv6"
+
+msgid "Do not process IPv6 traffic. Enable only if your ISP gives you a working IPv6 connection and you need it processed too."
+msgstr "Не обрабатывать IPv6-трафик. Снимите флажок, только если провайдер даёт рабочий IPv6 и его тоже нужно обрабатывать."
+
+msgid "Disable IPv4"
+msgstr "Отключить IPv4"
+
+msgid "Enable nfqws2"
+msgstr "Включить nfqws2"
+
+msgid "Packet processor on top of NFQUEUE whose strategies are Lua programs. Works for TCP and UDP (QUIC)."
+msgstr "Обработчик пакетов поверх NFQUEUE, стратегии которого — программы на Lua. Работает для TCP и UDP (QUIC)."
+
+msgid "TCP ports (override)"
+msgstr "TCP-порты (переопределение)"
+
+msgid "Outgoing TCP ports redirected to nfqws2. Empty: the ports from the preset header (usually 80,443)."
+msgstr "Исходящие TCP-порты, перенаправляемые в nfqws2. Пусто — порты из заголовка пресета (обычно 80,443)."
+
+msgid "UDP ports (override)"
+msgstr "UDP-порты (переопределение)"
+
+msgid "Outgoing UDP ports redirected to nfqws2 (443 = QUIC). Empty: the ports from the preset header."
+msgstr "Исходящие UDP-порты, перенаправляемые в nfqws2 (443 = QUIC). Пусто — порты из заголовка пресета."
+
+msgid "TCP: packets to the server"
+msgstr "TCP: пакетов к серверу"
+
+msgid "Only this many first outgoing packets of a connection are passed to nfqws2 (kernel-side limit that saves CPU). Empty: zapret2 default."
+msgstr "В nfqws2 передаётся только столько первых исходящих пакетов соединения (ограничение на стороне ядра, экономит CPU). Пусто — значение zapret2 по умолчанию."
+
+msgid "TCP: packets from the server"
+msgstr "TCP: пакетов от сервера"
+
+msgid "UDP: packets to the server"
+msgstr "UDP: пакетов к серверу"
+
+msgid "UDP: packets from the server"
+msgstr "UDP: пакетов от сервера"
+
+msgid "TCP ports without packet limit"
+msgstr "TCP-порты без ограничения пакетов"
+
+msgid "Needed only for stateless DPI that inspects every packet (typically plain HTTP). CPU hungry: enable with care."
+msgstr "Нужно только против DPI без состояния, проверяющего каждый пакет (обычно обычный HTTP). Сильно нагружает CPU: включайте осторожно."
+
+msgid "UDP ports without packet limit"
+msgstr "UDP-порты без ограничения пакетов"
+
+msgid "Preset sources"
+msgstr "Источники пресетов"
+
+msgid "URLs of text files with presets. They are downloaded by the \"Download presets\" button and, if enabled below, by the daily update. Downloaded presets are stored in /etc/zapret2/presets/downloaded; your own presets are never overwritten. A preset can contain Lua code that runs inside nfqws2: use only sources you trust, preferably over https."
+msgstr "URL текстовых файлов с пресетами. Скачиваются по кнопке «Скачать пресеты» и, если включено ниже, при ежедневном обновлении. Скачанные пресеты хранятся в /etc/zapret2/presets/downloaded; ваши собственные пресеты никогда не перезаписываются. Пресет может содержать Lua-код, выполняемый внутри nfqws2: используйте только источники, которым доверяете, желательно по https."
+
+msgid "Update presets daily"
+msgstr "Обновлять пресеты ежедневно"
+
+msgid "Download the preset sources together with the lists at the hour set on the Lists tab. If the active preset changed, nfqws2 is restarted."
+msgstr "Скачивать источники пресетов вместе со списками в час, заданный на вкладке «Списки». Если активный пресет изменился, nfqws2 перезапускается."
+
+msgid "Download lists"
+msgstr "Загрузка списков"
+
+msgid "Script that downloads/refreshes the ready-made upstream lists for the \"hostlist\" and \"ipset\" modes. Domain lists suit the hostlist modes, IP lists suit ipset mode. Your own lists with URLs are managed on the Lists page."
+msgstr "Скрипт, скачивающий/обновляющий готовые списки upstream для режимов «hostlist» и «ipset». Списки доменов подходят для hostlist-режимов, списки IP — для ipset. Собственные списки с URL настраиваются на странице «Списки»."
+
+msgid "-- none --"
+msgstr "-- нет --"
+
+msgid "Re-filter: domains"
+msgstr "Re-filter: домены"
+
+msgid "antizapret: domains"
+msgstr "antizapret: домены"
+
+msgid "registry: domains that resolve"
+msgstr "реестр: домены, которые резолвятся"
+
+msgid "registry: pre-resolved IPs (smart)"
+msgstr "реестр: готовые IP (smart)"
+
+msgid "registry: pre-resolved IPs"
+msgstr "реестр: готовые IP"
+
+msgid "Re-filter: IP list (ipsum)"
+msgstr "Re-filter: список IP (ipsum)"
+
+msgid "antifilter: ip"
+msgstr "antifilter: ip"
+
+msgid "antifilter: ipsmart"
+msgstr "antifilter: ipsmart"
+
+msgid "antifilter: ipsum"
+msgstr "antifilter: ipsum"
+
+msgid "antifilter: ipresolve"
+msgstr "antifilter: ipresolve"
+
+msgid "antifilter: allyouneed"
+msgstr "antifilter: allyouneed"
+
+msgid "only my own list (resolve domains to IPs)"
+msgstr "только мой список (домены → IP)"
+
+msgid "only the IP ban list"
+msgstr "только список IP-блокировок"
+
+msgid "Daily update hour"
+msgstr "Час ежедневного обновления"
+
+msgid "Hour of the day (0-23) when the lists (and presets, if enabled) are downloaded automatically. Empty: no automatic update."
+msgstr "Час суток (0–23), в который списки (и пресеты, если включено) скачиваются автоматически. Пусто — без автообновления."
+
+msgid "Compress lists"
+msgstr "Сжимать списки"
+
+msgid "Store lists downloaded by the upstream scripts gzip-compressed (saves flash/RAM, slightly slower)."
+msgstr "Хранить списки, скачанные скриптами upstream, в gzip (экономит flash/ОЗУ, немного медленнее)."
+
+msgid "autohostlist: failure threshold"
+msgstr "autohostlist: порог неудач"
+
+msgid "Number of failed connections within the time window after which a domain is added to the auto list."
+msgstr "Число неудачных соединений в пределах окна, после которого домен попадает в автосписок."
+
+msgid "autohostlist: time window, s"
+msgstr "autohostlist: окно времени, с"
+
+msgid "autohostlist: retransmission threshold"
+msgstr "autohostlist: порог ретрансмиссий"
+
+msgid "autohostlist: debug log"
+msgstr "autohostlist: отладочный лог"
+
+msgid "Log automatically detected domains to zapret-hosts-auto-debug.log in the lists directory."
+msgstr "Писать автоматически найденные домены в zapret-hosts-auto-debug.log в каталоге списков."
+
+msgid "Resolver threads"
+msgstr "Потоков резолвера"
+
+msgid "Parallel threads used to resolve domain lists to IP addresses."
+msgstr "Число параллельных потоков при преобразовании списков доменов в IP-адреса."
+
+msgid "Check for updates daily"
+msgstr "Проверять обновления каждый день"
+
+msgid "Look for a new version once a day (at the hour set on the Lists tab) and write the result to the system log. Nothing is installed automatically."
+msgstr "Раз в сутки (в час, заданный на вкладке «Списки») искать новую версию и записывать результат в системный журнал. Автоматически ничего не устанавливается."
+
+msgid "Firewall type"
+msgstr "Тип файрвола"
+
+msgid "Normally autodetected. nftables (fw4) is the primary supported mode; iptables is for old fw3 systems."
+msgstr "Обычно определяется автоматически. Основной поддерживаемый режим — nftables (fw4); iptables — для старых систем с fw3."
+
+msgid "autodetect"
+msgstr "автоопределение"
+
+msgid "Post-NAT mode (nftables)"
+msgstr "Режим post-NAT (nftables)"
+
+msgid "Process packets after NAT (default). Pre-NAT mode lets debug logs show client addresses but disables some bypass techniques for forwarded traffic."
+msgstr "Обрабатывать пакеты после NAT (по умолчанию). В режиме pre-NAT в отладочных логах видны адреса клиентов, но часть методов обхода для транзитного трафика отключается."
+
+msgid "Manage firewall rules"
+msgstr "Управлять правилами файрвола"
+
+msgid "Let the service add/remove its firewall rules on start/stop."
+msgstr "Разрешить сервису добавлять/удалять свои правила файрвола при запуске/остановке."
+
+msgid "Drop ICMP time-exceeded"
+msgstr "Отбрасывать ICMP time-exceeded"
+
+msgid "Drop ICMP \"time exceeded\" for connections modified by nfqws2. Disable if traceroute/mtr is affected."
+msgstr "Отбрасывать ICMP «time exceeded» для соединений, изменённых nfqws2. Отключите, если страдает traceroute/mtr."
+
+msgid "WAN networks (IPv4)"
+msgstr "WAN-сети (IPv4)"
+
+msgid "By default these are the interfaces with an IPv4 default route."
+msgstr "По умолчанию — интерфейсы с IPv4-маршрутом по умолчанию."
+
+msgid "WAN networks (IPv6)"
+msgstr "WAN-сети (IPv6)"
+
+msgid "By default these are the interfaces with an IPv6 default route."
+msgstr "По умолчанию — интерфейсы с IPv6-маршрутом по умолчанию."
+
+msgid "Daemon user"
+msgstr "Пользователь процессов"
+
+msgid "Unprivileged user the nfqws2 process switches to."
+msgstr "Непривилегированный пользователь, под которым работает nfqws2."
+
+msgid "NFQUEUE number"
+msgstr "Номер NFQUEUE"
+
+msgid "Desync mark"
+msgstr "Метка desync"
+
+msgid "Packet mark used by nfqws2 to avoid loops."
+msgstr "Метка пакетов, которой nfqws2 защищается от зацикливания."
+
+msgid "Desync mark (post-NAT)"
+msgstr "Метка desync (post-NAT)"
+
+msgid "Filter mark"
+msgstr "Метка фильтра"
+
+msgid "If set, only packets carrying this mark are redirected to nfqws2. Lets you restrict zapret2 with your own firewall rules."
+msgstr "Если задана, в nfqws2 перенаправляются только пакеты с этой меткой. Позволяет ограничивать zapret2 собственными правилами файрвола."
+
+msgid "Temporary directory"
+msgstr "Временный каталог"
+
+msgid "Used while downloading lists. Set it if /tmp is too small."
+msgstr "Используется при скачивании списков. Укажите, если /tmp слишком мал."
+
+msgid "Extra configuration"
+msgstr "Дополнительная конфигурация"
+
+msgid "Raw lines appended to the generated zapret2 config (shell syntax, VAR=\"value\"). Use it for variables that have no field here, e.g. IPSET_OPT or IP2NET_OPT4. Careful: wrong syntax prevents the service from starting."
+msgstr "Строки, дописываемые как есть в сгенерированный конфиг zapret2 (синтаксис shell, VAR=\"значение\"). Для переменных, у которых нет поля здесь, например IPSET_OPT или IP2NET_OPT4. Осторожно: ошибка в синтаксисе не даст сервису запуститься."
+
+msgid "Only the sites from the \"Through zapret\" list (and downloaded lists) go through zapret."
+msgstr "Через zapret идут только сайты из списка «Через zapret» (и скачанных списков)."
+
+msgid "Your list plus sites where blocking was detected automatically."
+msgstr "Ваш список плюс сайты, где блокировка была обнаружена автоматически."
+
+msgid "Matched by the IP addresses of the lists."
+msgstr "Сопоставление по IP-адресам из списков."
+
+msgid "The project repository was not found, or it has no releases yet."
+msgstr "Репозиторий проекта не найден, или в нём пока нет релизов."
+
+msgid "GitHub refused the request: too many requests from this address. Try again later."
+msgstr "GitHub отказал в запросе: слишком много запросов с этого адреса. Повторите позже."
+
+msgid "Cannot reach GitHub. Check the internet connection of the router."
+msgstr "Не удаётся подключиться к GitHub. Проверьте интернет-соединение роутера."
+
+msgid "The update check failed (%s)."
+msgstr "Не удалось проверить обновления (%s)."
+
+msgid "Command failed: %s"
+msgstr "Команда не выполнена: %s"
+
+msgid "Cannot change the state: %s"
+msgstr "Не удалось изменить состояние: %s"
+
+msgid "Cannot start the task (already running?)"
+msgstr "Не удалось запустить задачу (уже выполняется?)"
+
+msgid "The task was started in the background. See the Lists and Presets pages for progress."
+msgstr "Задача запущена в фоне. Ход выполнения — на страницах «Списки» и «Пресеты»."
+
+msgid "Installed version:"
+msgstr "Установленная версия:"
+
+msgid "unknown"
+msgstr "неизвестна"
+
+msgid "A new version is available: %s"
+msgstr "Доступна новая версия: %s"
+
+msgid "Open the release page"
+msgstr "Открыть страницу релиза"
+
+msgid "Download the packages for your router from the release page, copy them to /tmp and install them: \"opkg install /tmp/*.ipk\" (OpenWrt 24.10 and older) or \"apk add --allow-untrusted /tmp/*.apk\" (OpenWrt 25.12+)."
+msgstr "Скачайте со страницы релиза пакеты для своего роутера, скопируйте их в /tmp и установите: «opkg install /tmp/*.ipk» (OpenWrt 24.10 и старше) или «apk add --allow-untrusted /tmp/*.apk» (OpenWrt 25.12+)."
+
+msgid "up to date"
+msgstr "актуальная"
+
+msgid "The latest published version is %s."
+msgstr "Последняя опубликованная версия — %s."
+
+msgid "Checked: %s"
+msgstr "Проверено: %s"
+
+msgid "Check for updates"
+msgstr "Проверить обновления"
+
+msgid "Zapret2 is working"
+msgstr "Zapret2 работает"
+
+msgid "Strategy \"%s\", mode \"%s\"."
+msgstr "Стратегия «%s», режим «%s»."
+
+msgid "Zapret2 is on, but not running"
+msgstr "Zapret2 включён, но не запущен"
+
+msgid "Press \"Restart\". If it does not start, see the system log below."
+msgstr "Нажмите «Перезапустить». Если не запускается, смотрите системный журнал ниже."
+
+msgid "Zapret2 is off"
+msgstr "Zapret2 выключен"
+
+msgid "Press the button to start it."
+msgstr "Нажмите кнопку, чтобы запустить."
+
+msgid "Press the button to turn it on: it enables the service and nfqws2 with the selected strategy."
+msgstr "Нажмите кнопку, чтобы включить: она включает службу и nfqws2 с выбранной стратегией."
+
+msgid "Turn off"
+msgstr "Выключить"
+
+msgid "Turn on"
+msgstr "Включить"
+
+msgid "Restart"
+msgstr "Перезапустить"
+
+msgid "Strategy"
+msgstr "Стратегия"
+
+msgid "not found"
+msgstr "не найден"
+
+msgid "Change strategy"
+msgstr "Сменить стратегию"
+
+msgid "What goes through zapret"
+msgstr "Что идёт через zapret"
+
+msgid "Change"
+msgstr "Изменить"
+
+msgid "%d through zapret · %d bypass"
+msgstr "%d через zapret · %d в обход"
+
+msgid "Edit lists"
+msgstr "Изменить списки"
+
+msgid "Diagnostics"
+msgstr "Диагностика"
+
+msgid "TCP 16-20 blocking"
+msgstr "Обрыв TCP 16-20"
+
+msgid "Process"
+msgstr "Процесс"
+
+msgid "Process ID"
+msgstr "ID процесса"
+
+msgid "Command line"
+msgstr "Командная строка"
+
+msgid "running"
+msgstr "работает"
+
+msgid "stopped"
+msgstr "остановлен"
+
+msgid "No zapret2 processes are running"
+msgstr "Процессы zapret2 не запущены"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "Firewall"
+msgstr "Файрвол"
+
+msgid "rules active"
+msgstr "правила применены"
+
+msgid "no rules"
+msgstr "правил нет"
+
+msgid "Update presets now"
+msgstr "Обновить пресеты"
+
+msgid "Processes"
+msgstr "Процессы"
+
+msgid "System log (zapret2)"
+msgstr "Системный журнал (zapret2)"
+
+msgid "Bypass of DPI-based blocking with nfqws2 and Lua strategies. Pick a strategy on the Presets page."
+msgstr "Обход блокировок на основе DPI с помощью nfqws2 и Lua-стратегий. Стратегию выбирайте на странице «Пресеты»."
+
+msgid "Status"
+msgstr "Состояние"
+
+msgid "Strategy test"
+msgstr "Подбор стратегии"
+

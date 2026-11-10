@@ -1,0 +1,1106 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-zapret2\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+
+msgid "HTTP"
+msgstr ""
+
+msgid "HTTPS (TLS 1.2)"
+msgstr ""
+
+msgid "HTTPS (TLS 1.3)"
+msgstr ""
+
+msgid "QUIC (HTTP/3)"
+msgstr ""
+
+msgid "Select at least one test."
+msgstr ""
+
+msgid "Cannot start the test: %s"
+msgstr ""
+
+msgid "already running?"
+msgstr ""
+
+msgid "(no output yet)"
+msgstr ""
+
+msgid "Running..."
+msgstr ""
+
+msgid "Idle"
+msgstr ""
+
+msgid "veryquick - the fastest check"
+msgstr ""
+
+msgid "quick - find something that works, fast"
+msgstr ""
+
+msgid "standard - more variants"
+msgstr ""
+
+msgid "force - everything, even if the site already works"
+msgstr ""
+
+msgid "Start test"
+msgstr ""
+
+msgid "Stop"
+msgstr ""
+
+msgid "Zapret2: strategy test"
+msgstr ""
+
+msgid "Runs blockcheck2.sh from zapret2: it tries different strategies against the chosen domains and reports which of them work with your ISP."
+msgstr ""
+
+msgid "While the test is running, the zapret2 service is stopped (and started again afterwards). The test takes from minutes to over an hour."
+msgstr ""
+
+msgid "When it finishes, look for the SUMMARY section at the end of the log: the working options can be put into your own preset on the Presets page."
+msgstr ""
+
+msgid "Domains"
+msgstr ""
+
+msgid "Scan level"
+msgstr ""
+
+msgid "IP version"
+msgstr ""
+
+msgid "Tests"
+msgstr ""
+
+msgid "Output"
+msgstr ""
+
+msgid "Self-check"
+msgstr ""
+
+msgid "Your host"
+msgstr ""
+
+msgid "Detected"
+msgstr ""
+
+msgid "Probably"
+msgstr ""
+
+msgid "Possible"
+msgstr ""
+
+msgid "Unlikely"
+msgstr ""
+
+msgid "Not detected"
+msgstr ""
+
+msgid "Skipped"
+msgstr ""
+
+msgid "Waiting"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "Checking"
+msgstr ""
+
+msgid "Cannot start the check: %s"
+msgstr ""
+
+msgid "it may be running already"
+msgstr ""
+
+msgid "Enter a host name, for example example.com (no address, no port)."
+msgstr ""
+
+msgid "zapret2 was running (strategy: %s)."
+msgstr ""
+
+msgid "zapret2 was stopped."
+msgstr ""
+
+msgid "Checking: %d of %d"
+msgstr ""
+
+msgid "The check was interrupted"
+msgstr ""
+
+msgid "%d of %d hosts were checked."
+msgstr ""
+
+msgid "TCP 16-20 blocking detected: %d of %d hosts"
+msgstr ""
+
+msgid "The provider cuts connections to these hosts after the first kilobytes of data."
+msgstr ""
+
+msgid "Blocking is possible: %d of %d hosts"
+msgstr ""
+
+msgid "The connections ended with an error, not with a freeze: the result is not certain."
+msgstr ""
+
+msgid "TCP 16-20 blocking is not detected"
+msgstr ""
+
+msgid "Connections to the checked hosts carry 64 KiB without a freeze."
+msgstr ""
+
+msgid "Preparing the check…"
+msgstr ""
+
+msgid "The host list is being downloaded."
+msgstr ""
+
+msgid "Provider (by the address of the router): AS%d %s"
+msgstr ""
+
+msgid "With zapret2"
+msgstr ""
+
+msgid "Without zapret2"
+msgstr ""
+
+msgid "Provider"
+msgstr ""
+
+msgid "Reachable"
+msgstr ""
+
+msgid "No results yet. Press \"Run the check\"."
+msgstr ""
+
+msgid "(empty)"
+msgstr ""
+
+msgid "Log of the check"
+msgstr ""
+
+msgid "Run the check"
+msgstr ""
+
+msgid "%d s"
+msgstr ""
+
+msgid "Your host, e.g. example.com"
+msgstr ""
+
+msgid "Check this host"
+msgstr ""
+
+msgid "The service is stopped for the time of the second pass and started again."
+msgstr ""
+
+msgid "Also check with zapret2 stopped"
+msgstr ""
+
+msgid "Wait for an answer:"
+msgstr ""
+
+msgid "What is checked and how"
+msgstr ""
+
+msgid "Some providers cut a TCP connection to foreign hosting providers and CDNs after the client has sent 16-20 KB of data. Sites on such hosts open halfway, uploads stall, and nothing changes in the browser except the freeze."
+msgstr ""
+
+msgid "For every host of the list the router checks that it answers, then sends 64 KiB to it: first one POST request, then ten requests with long addresses in a single connection. A connection that freezes means that the DPI of the provider cuts it."
+msgstr ""
+
+msgid "The check runs on the router, so its traffic goes through the zapret2 rules just like the traffic of your devices. Run it with zapret2 on and off (or tick the box below) to see whether the strategy changes anything."
+msgstr ""
+
+msgid "The list of hosts is taken from the dpi-checkers project at the start of each check. To show the provider, the public RIPE Stat service is asked for the autonomous system of the address of the router. Nothing else is sent anywhere."
+msgstr ""
+
+msgid "The original checker"
+msgstr ""
+
+msgid "Discussion of the method"
+msgstr ""
+
+msgid "dpi-checkers repository"
+msgstr ""
+
+msgid "Zapret2: diagnostics"
+msgstr ""
+
+msgid "Checks whether your provider cuts TCP connections after 16-20 KB of data (the \"TCP 16-20\" blocking)."
+msgstr ""
+
+msgid "Everything"
+msgstr ""
+
+msgid "All traffic goes through zapret, except the sites in the bypass list."
+msgstr ""
+
+msgid "Only my list"
+msgstr ""
+
+msgid "Only the sites from the \"Through zapret\" list (and downloaded lists) go through zapret. Everything else is left alone."
+msgstr ""
+
+msgid "My list + auto-detect"
+msgstr ""
+
+msgid "Like \"Only my list\", plus sites where blocking was detected automatically."
+msgstr ""
+
+msgid "By IP address"
+msgstr ""
+
+msgid "Match by the IP addresses of the lists (resolved by \"Update lists now\")."
+msgstr ""
+
+msgid "My hostlist"
+msgstr ""
+
+msgid "Exclusions"
+msgstr ""
+
+msgid "IP ban list"
+msgstr ""
+
+msgid "Auto hostlist"
+msgstr ""
+
+msgid "Downloaded list"
+msgstr ""
+
+msgid "Domains zapret2 should process in the hostlist / autohostlist / ipset modes. One domain per line; subdomains are included. Lines starting with # are comments."
+msgstr ""
+
+msgid "Domains that are never processed, even if they are in other lists (banks, government services, local resources)."
+msgstr ""
+
+msgid "Domains whose addresses are put to the \"ipban\" set, which custom scripts can use. Usually empty."
+msgstr ""
+
+msgid "Filled by nfqws2 in autohostlist mode with domains where blocking was detected. You can review or clean it here."
+msgstr ""
+
+msgid "Produced by the list script chosen in Settings → Lists. It is replaced on every update, so it is read-only."
+msgstr ""
+
+msgid "A downloaded list. Your manual changes are overwritten by the next download; remove the URL to keep a list local."
+msgstr ""
+
+msgid "Your own list. Use it in presets as <LIST:%s>."
+msgstr ""
+
+msgid "List"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Entries"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Modified"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "IP addresses"
+msgstr ""
+
+msgid "domains"
+msgstr ""
+
+msgid "Cannot change the mode: %s"
+msgstr ""
+
+msgid "The mode was changed, nfqws2 was restarted."
+msgstr ""
+
+msgid "The mode was changed. It will be used the next time the service starts."
+msgstr ""
+
+msgid "What goes through zapret?"
+msgstr ""
+
+msgid "Not used right now: in the \"Everything\" mode all traffic is processed anyway. Choose \"Only my list\" above to use this list."
+msgstr ""
+
+msgid "Run \"Update lists now\" after changes: the domains are resolved to IP addresses."
+msgstr ""
+
+msgid "Through zapret"
+msgstr ""
+
+msgid "Sites that should go through zapret."
+msgstr ""
+
+msgid "Bypass zapret"
+msgstr ""
+
+msgid "Sites that never go through zapret, in any mode. IP addresses and subnets (10.0.0.0/8) work too."
+msgstr ""
+
+msgid "Add a site, e.g. example.com"
+msgstr ""
+
+msgid "%d entries"
+msgstr ""
+
+msgid "List saved. nfqws2 was told to reload it."
+msgstr ""
+
+msgid "Cannot save the list: %s"
+msgstr ""
+
+msgid "This does not look like a domain name or an IP address."
+msgstr ""
+
+msgid "\"%s\" is already in the list."
+msgstr ""
+
+msgid "The list is too large to edit here. Use the viewer below."
+msgstr ""
+
+msgid "The list cannot be loaded"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Save list"
+msgstr ""
+
+msgid "Display name (optional)"
+msgstr ""
+
+msgid "domains (hostlist)"
+msgstr ""
+
+msgid "IP addresses / subnets (ipset)"
+msgstr ""
+
+msgid "List settings"
+msgstr ""
+
+msgid "Add list"
+msgstr ""
+
+msgid "The list is stored in /etc/zapret2/lists/<id>.txt and is used in presets as <LIST:id>. If a URL is given, it is downloaded by \"Update lists\" and by the daily update."
+msgstr ""
+
+msgid "Id"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Download URL"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "The id may only contain a-z, 0-9 and \"_\" (up to 40 characters)."
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Delete list"
+msgstr ""
+
+msgid "Delete the list \"%s\" and its file? Presets that use <LIST:%s> will get an empty list."
+msgstr ""
+
+msgid "Search..."
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "(no matching lines)"
+msgstr ""
+
+msgid "%d-%d of %d matches (%d lines total)"
+msgstr ""
+
+msgid "%d-%d of %d"
+msgstr ""
+
+msgid "The list is too large to edit in the browser (%s). You can still view and search it."
+msgstr ""
+
+msgid "Cannot load the list: %s"
+msgstr ""
+
+msgid "List saved. nfqws2 was told to reload it. In ipset mode run \"Update lists now\" to resolve new domains to addresses."
+msgstr ""
+
+msgid "Cannot start the list update (already running?)"
+msgstr ""
+
+msgid "Update lists now"
+msgstr ""
+
+msgid "Zapret2: lists"
+msgstr ""
+
+msgid "Choose what goes through zapret and what bypasses it. Changes apply immediately."
+msgstr ""
+
+msgid "Other lists"
+msgstr ""
+
+msgid "Downloaded and your own lists. Open a list to view, search and (when it is small enough) edit it. Your own lists can be downloaded from a URL."
+msgstr ""
+
+msgid "Update log"
+msgstr ""
+
+msgid "built-in"
+msgstr ""
+
+msgid "downloaded"
+msgstr ""
+
+msgid "mine"
+msgstr ""
+
+msgid "The preset \"%s\" contains custom Lua code that will run inside nfqws2. Activate it only if you trust its source. Activate?"
+msgstr ""
+
+msgid "The preset \"%s\" needs these lists. They are added to the Lists page and downloaded now and then every day:"
+msgstr ""
+
+msgid "Preset with custom Lua code"
+msgstr ""
+
+msgid "Preset with lists"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Cannot activate the preset: %s"
+msgstr ""
+
+msgid "The preset is active, nfqws2 was restarted."
+msgstr ""
+
+msgid "The preset is selected. It will be used the next time the service starts."
+msgstr ""
+
+msgid "Added lists: %s. They are being downloaded, the progress is shown on the Lists page."
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "The id may only contain a-z, 0-9, \"-\" and \"_\" (up to 40 characters)."
+msgstr ""
+
+msgid "Cannot save the preset: %s"
+msgstr ""
+
+msgid "Preset id"
+msgstr ""
+
+msgid "Edit preset"
+msgstr ""
+
+msgid "Preset (read-only)"
+msgstr ""
+
+msgid "This preset replaces the %s preset with the same id. Delete it to get the original back."
+msgstr ""
+
+msgid "Built-in and downloaded presets cannot be edited. Use \"Copy\" to make your own version."
+msgstr ""
+
+msgid "Copy preset"
+msgstr ""
+
+msgid "Choose an id for your copy and edit the options. It will appear in the list as your own preset."
+msgstr ""
+
+msgid "New preset"
+msgstr ""
+
+msgid "Lines starting with #@ are the preset description; the rest are nfqws2 options."
+msgstr ""
+
+msgid "Delete preset"
+msgstr ""
+
+msgid "Delete your preset \"%s\"?"
+msgstr ""
+
+msgid "Cannot start the download (already running?)"
+msgstr ""
+
+msgid "Use"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Restore original"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "custom Lua"
+msgstr ""
+
+msgid "Lists: %s"
+msgstr ""
+
+msgid "Source: %s"
+msgstr ""
+
+msgid "Sources:"
+msgstr ""
+
+msgid "No download source is configured. Add a preset URL in"
+msgstr ""
+
+msgid "Presets"
+msgstr ""
+
+msgid "Zapret2: presets"
+msgstr ""
+
+msgid "A preset is a ready-made set of nfqws2 options (a strategy). Switch between them to find what works with your ISP, or make your own."
+msgstr ""
+
+msgid "The active preset is applied immediately; if the service is running, nfqws2 is restarted."
+msgstr ""
+
+msgid "Download presets"
+msgstr ""
+
+msgid "A preset can contain Lua code that runs inside nfqws2. Download presets only from sources you trust, preferably over https."
+msgstr ""
+
+msgid "Preset file format"
+msgstr ""
+
+msgid "A preset is a text file. Header lines have the form \"#@key: value\": name, description, description.ru, tcp_ports, udp_ports (ports redirected to nfqws2), and optionally tcp_pkt_out, tcp_pkt_in, udp_pkt_out, udp_pkt_in."
+msgstr ""
+
+msgid "All other lines (except comments starting with #) are nfqws2 options. Placeholders: <HOSTLIST> and <HOSTLIST_NOAUTO> (replaced according to the filter mode), <LIST:name> (path of your list \"name\", see the Lists page), <BASE> (zapret2 files, e.g. <BASE>/files/fake/stun.bin). An option cannot contain spaces: put Lua code into a file and pass it as --lua-init=@<RW>/lua/file.lua (<RW> is /etc/zapret2)."
+msgstr ""
+
+msgid "A line \"#@list: id hosts|ips URL title\" declares a list that the preset needs: it is added on the Lists page and downloaded when the preset is activated, and then every day."
+msgstr ""
+
+msgid "A download source is a text file with presets one after another, each starting with a line \"#@id: some-id\"; a file without such lines is treated as a single preset named after the file."
+msgstr ""
+
+msgid "Expected a comma separated list of ports or ranges, e.g. 80,443,2053 or 443-65535"
+msgstr ""
+
+msgid "Expected a hexadecimal mask like 0x40000000"
+msgstr ""
+
+msgid "Expected an http or https URL without spaces or quotes"
+msgstr ""
+
+msgid "Zapret2"
+msgstr ""
+
+msgid "Settings are stored in /etc/config/zapret2. On \"Save & Apply\" the zapret2 configuration is regenerated and the service is restarted if it is enabled."
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "nfqws2"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
+
+msgid "Updates"
+msgstr ""
+
+msgid "Advanced"
+msgstr ""
+
+msgid "Enable zapret2"
+msgstr ""
+
+msgid "Start the service at boot and apply changes on Save & Apply. The Start/Stop buttons on the Status page work independently of this switch."
+msgstr ""
+
+msgid "Active preset"
+msgstr ""
+
+msgid "The strategy that nfqws2 uses. You can also switch it, view and edit presets on the Presets page."
+msgstr ""
+
+msgid "Filter mode"
+msgstr ""
+
+msgid "Which connections are processed by the &lt;HOSTLIST&gt; parts of a preset. With \"none\" every connection to the selected ports is handled."
+msgstr ""
+
+msgid "none - all traffic"
+msgstr ""
+
+msgid "hostlist - only domains from the lists"
+msgstr ""
+
+msgid "autohostlist - lists + automatic detection of blocked domains"
+msgstr ""
+
+msgid "ipset - only IP addresses from the lists"
+msgstr ""
+
+msgid "LAN networks"
+msgstr ""
+
+msgid "Networks whose clients are processed (traffic from these networks going to the Internet)."
+msgstr ""
+
+msgid "Flow offloading"
+msgstr ""
+
+msgid "Flow offloading (fast path) bypasses the packet filter. \"donttouch\": leave the system setting as it is. Other values let zapret2 exclude the processed connections from offloading."
+msgstr ""
+
+msgid "donttouch"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "software"
+msgstr ""
+
+msgid "hardware"
+msgstr ""
+
+msgid "Disable IPv6"
+msgstr ""
+
+msgid "Do not process IPv6 traffic. Enable only if your ISP gives you a working IPv6 connection and you need it processed too."
+msgstr ""
+
+msgid "Disable IPv4"
+msgstr ""
+
+msgid "Enable nfqws2"
+msgstr ""
+
+msgid "Packet processor on top of NFQUEUE whose strategies are Lua programs. Works for TCP and UDP (QUIC)."
+msgstr ""
+
+msgid "TCP ports (override)"
+msgstr ""
+
+msgid "Outgoing TCP ports redirected to nfqws2. Empty: the ports from the preset header (usually 80,443)."
+msgstr ""
+
+msgid "UDP ports (override)"
+msgstr ""
+
+msgid "Outgoing UDP ports redirected to nfqws2 (443 = QUIC). Empty: the ports from the preset header."
+msgstr ""
+
+msgid "TCP: packets to the server"
+msgstr ""
+
+msgid "Only this many first outgoing packets of a connection are passed to nfqws2 (kernel-side limit that saves CPU). Empty: zapret2 default."
+msgstr ""
+
+msgid "TCP: packets from the server"
+msgstr ""
+
+msgid "UDP: packets to the server"
+msgstr ""
+
+msgid "UDP: packets from the server"
+msgstr ""
+
+msgid "TCP ports without packet limit"
+msgstr ""
+
+msgid "Needed only for stateless DPI that inspects every packet (typically plain HTTP). CPU hungry: enable with care."
+msgstr ""
+
+msgid "UDP ports without packet limit"
+msgstr ""
+
+msgid "Preset sources"
+msgstr ""
+
+msgid "URLs of text files with presets. They are downloaded by the \"Download presets\" button and, if enabled below, by the daily update. Downloaded presets are stored in /etc/zapret2/presets/downloaded; your own presets are never overwritten. A preset can contain Lua code that runs inside nfqws2: use only sources you trust, preferably over https."
+msgstr ""
+
+msgid "Update presets daily"
+msgstr ""
+
+msgid "Download the preset sources together with the lists at the hour set on the Lists tab. If the active preset changed, nfqws2 is restarted."
+msgstr ""
+
+msgid "Download lists"
+msgstr ""
+
+msgid "Script that downloads/refreshes the ready-made upstream lists for the \"hostlist\" and \"ipset\" modes. Domain lists suit the hostlist modes, IP lists suit ipset mode. Your own lists with URLs are managed on the Lists page."
+msgstr ""
+
+msgid "-- none --"
+msgstr ""
+
+msgid "Re-filter: domains"
+msgstr ""
+
+msgid "antizapret: domains"
+msgstr ""
+
+msgid "registry: domains that resolve"
+msgstr ""
+
+msgid "registry: pre-resolved IPs (smart)"
+msgstr ""
+
+msgid "registry: pre-resolved IPs"
+msgstr ""
+
+msgid "Re-filter: IP list (ipsum)"
+msgstr ""
+
+msgid "antifilter: ip"
+msgstr ""
+
+msgid "antifilter: ipsmart"
+msgstr ""
+
+msgid "antifilter: ipsum"
+msgstr ""
+
+msgid "antifilter: ipresolve"
+msgstr ""
+
+msgid "antifilter: allyouneed"
+msgstr ""
+
+msgid "only my own list (resolve domains to IPs)"
+msgstr ""
+
+msgid "only the IP ban list"
+msgstr ""
+
+msgid "Daily update hour"
+msgstr ""
+
+msgid "Hour of the day (0-23) when the lists (and presets, if enabled) are downloaded automatically. Empty: no automatic update."
+msgstr ""
+
+msgid "Compress lists"
+msgstr ""
+
+msgid "Store lists downloaded by the upstream scripts gzip-compressed (saves flash/RAM, slightly slower)."
+msgstr ""
+
+msgid "autohostlist: failure threshold"
+msgstr ""
+
+msgid "Number of failed connections within the time window after which a domain is added to the auto list."
+msgstr ""
+
+msgid "autohostlist: time window, s"
+msgstr ""
+
+msgid "autohostlist: retransmission threshold"
+msgstr ""
+
+msgid "autohostlist: debug log"
+msgstr ""
+
+msgid "Log automatically detected domains to zapret-hosts-auto-debug.log in the lists directory."
+msgstr ""
+
+msgid "Resolver threads"
+msgstr ""
+
+msgid "Parallel threads used to resolve domain lists to IP addresses."
+msgstr ""
+
+msgid "Check for updates daily"
+msgstr ""
+
+msgid "Look for a new version once a day (at the hour set on the Lists tab) and write the result to the system log. Nothing is installed automatically."
+msgstr ""
+
+msgid "Firewall type"
+msgstr ""
+
+msgid "Normally autodetected. nftables (fw4) is the primary supported mode; iptables is for old fw3 systems."
+msgstr ""
+
+msgid "autodetect"
+msgstr ""
+
+msgid "Post-NAT mode (nftables)"
+msgstr ""
+
+msgid "Process packets after NAT (default). Pre-NAT mode lets debug logs show client addresses but disables some bypass techniques for forwarded traffic."
+msgstr ""
+
+msgid "Manage firewall rules"
+msgstr ""
+
+msgid "Let the service add/remove its firewall rules on start/stop."
+msgstr ""
+
+msgid "Drop ICMP time-exceeded"
+msgstr ""
+
+msgid "Drop ICMP \"time exceeded\" for connections modified by nfqws2. Disable if traceroute/mtr is affected."
+msgstr ""
+
+msgid "WAN networks (IPv4)"
+msgstr ""
+
+msgid "By default these are the interfaces with an IPv4 default route."
+msgstr ""
+
+msgid "WAN networks (IPv6)"
+msgstr ""
+
+msgid "By default these are the interfaces with an IPv6 default route."
+msgstr ""
+
+msgid "Daemon user"
+msgstr ""
+
+msgid "Unprivileged user the nfqws2 process switches to."
+msgstr ""
+
+msgid "NFQUEUE number"
+msgstr ""
+
+msgid "Desync mark"
+msgstr ""
+
+msgid "Packet mark used by nfqws2 to avoid loops."
+msgstr ""
+
+msgid "Desync mark (post-NAT)"
+msgstr ""
+
+msgid "Filter mark"
+msgstr ""
+
+msgid "If set, only packets carrying this mark are redirected to nfqws2. Lets you restrict zapret2 with your own firewall rules."
+msgstr ""
+
+msgid "Temporary directory"
+msgstr ""
+
+msgid "Used while downloading lists. Set it if /tmp is too small."
+msgstr ""
+
+msgid "Extra configuration"
+msgstr ""
+
+msgid "Raw lines appended to the generated zapret2 config (shell syntax, VAR=\"value\"). Use it for variables that have no field here, e.g. IPSET_OPT or IP2NET_OPT4. Careful: wrong syntax prevents the service from starting."
+msgstr ""
+
+msgid "Only the sites from the \"Through zapret\" list (and downloaded lists) go through zapret."
+msgstr ""
+
+msgid "Your list plus sites where blocking was detected automatically."
+msgstr ""
+
+msgid "Matched by the IP addresses of the lists."
+msgstr ""
+
+msgid "The project repository was not found, or it has no releases yet."
+msgstr ""
+
+msgid "GitHub refused the request: too many requests from this address. Try again later."
+msgstr ""
+
+msgid "Cannot reach GitHub. Check the internet connection of the router."
+msgstr ""
+
+msgid "The update check failed (%s)."
+msgstr ""
+
+msgid "Command failed: %s"
+msgstr ""
+
+msgid "Cannot change the state: %s"
+msgstr ""
+
+msgid "Cannot start the task (already running?)"
+msgstr ""
+
+msgid "The task was started in the background. See the Lists and Presets pages for progress."
+msgstr ""
+
+msgid "Installed version:"
+msgstr ""
+
+msgid "unknown"
+msgstr ""
+
+msgid "A new version is available: %s"
+msgstr ""
+
+msgid "Open the release page"
+msgstr ""
+
+msgid "Download the packages for your router from the release page, copy them to /tmp and install them: \"opkg install /tmp/*.ipk\" (OpenWrt 24.10 and older) or \"apk add --allow-untrusted /tmp/*.apk\" (OpenWrt 25.12+)."
+msgstr ""
+
+msgid "up to date"
+msgstr ""
+
+msgid "The latest published version is %s."
+msgstr ""
+
+msgid "Checked: %s"
+msgstr ""
+
+msgid "Check for updates"
+msgstr ""
+
+msgid "Zapret2 is working"
+msgstr ""
+
+msgid "Strategy \"%s\", mode \"%s\"."
+msgstr ""
+
+msgid "Zapret2 is on, but not running"
+msgstr ""
+
+msgid "Press \"Restart\". If it does not start, see the system log below."
+msgstr ""
+
+msgid "Zapret2 is off"
+msgstr ""
+
+msgid "Press the button to start it."
+msgstr ""
+
+msgid "Press the button to turn it on: it enables the service and nfqws2 with the selected strategy."
+msgstr ""
+
+msgid "Turn off"
+msgstr ""
+
+msgid "Turn on"
+msgstr ""
+
+msgid "Restart"
+msgstr ""
+
+msgid "Strategy"
+msgstr ""
+
+msgid "not found"
+msgstr ""
+
+msgid "Change strategy"
+msgstr ""
+
+msgid "What goes through zapret"
+msgstr ""
+
+msgid "Change"
+msgstr ""
+
+msgid "%d through zapret · %d bypass"
+msgstr ""
+
+msgid "Edit lists"
+msgstr ""
+
+msgid "Diagnostics"
+msgstr ""
+
+msgid "TCP 16-20 blocking"
+msgstr ""
+
+msgid "Process"
+msgstr ""
+
+msgid "Process ID"
+msgstr ""
+
+msgid "Command line"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "stopped"
+msgstr ""
+
+msgid "No zapret2 processes are running"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Firewall"
+msgstr ""
+
+msgid "rules active"
+msgstr ""
+
+msgid "no rules"
+msgstr ""
+
+msgid "Update presets now"
+msgstr ""
+
+msgid "Processes"
+msgstr ""
+
+msgid "System log (zapret2)"
+msgstr ""
+
+msgid "Bypass of DPI-based blocking with nfqws2 and Lua strategies. Pick a strategy on the Presets page."
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Strategy test"
+msgstr ""
+

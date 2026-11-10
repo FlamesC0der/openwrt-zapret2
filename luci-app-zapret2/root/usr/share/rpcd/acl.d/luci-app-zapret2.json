@@ -1,0 +1,48 @@
+{
+	"luci-app-zapret2": {
+		"description": "Grant access to Zapret2 status, presets, lists and configuration",
+		"read": {
+			"ubus": {
+				"luci.zapret2": [
+					"status",
+					"presets",
+					"get_preset",
+					"lists",
+					"get_list",
+					"view_list",
+					"job_log",
+					"get_log",
+					"diag_results"
+				],
+				"network.interface": [
+					"dump"
+				]
+			},
+			"uci": [
+				"zapret2",
+				"network"
+			]
+		},
+		"write": {
+			"ubus": {
+				"luci.zapret2": [
+					"service",
+					"save_preset",
+					"delete_preset",
+					"set_preset",
+					"set_list",
+					"save_list",
+					"delete_list",
+					"job_start",
+					"job_stop",
+					"set_enabled",
+					"set_mode",
+					"check_update"
+				]
+			},
+			"uci": [
+				"zapret2"
+			]
+		}
+	}
+}

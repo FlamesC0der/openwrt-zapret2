@@ -1,0 +1,42 @@
+#@name: General (ALT) - Discord + YouTube
+#@description: Port of "general (ALT)" from zapret-discord-youtube (Flowseal) to nfqws2: fake + fakedsplit with TCP timestamp fooling, QUIC and Discord voice fakes. Works from lists: the preset adds the lists "fs_general", "fs_google" and "fs_exclude" from that project and downloads them daily; your own sites are added in the filter mode "Only my list". The catch-all ipset profiles are left out; the game filter (ports 1024-65535) is in the preset general-alt-games.
+#@description.ru: Порт «general (ALT)» из zapret-discord-youtube (Flowseal) на nfqws2: fake + fakedsplit с подменой TCP timestamp, фейки для QUIC и голоса Discord. Работает по спискам: пресет добавляет списки «fs_general», «fs_google» и «fs_exclude» из этого проекта и скачивает их ежедневно; свои сайты добавляются в режиме «Только мой список». Профили ipset-all (для всего подряд) не переносились; игровой фильтр (порты 1024-65535) есть в пресете general-alt-games.
+#@tcp_ports: 80,443,2053,2083,2087,2096,8443
+#@udp_ports: 443,19294-19344,50000-50100
+#@list: fs_general hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-general.txt Flowseal: general list
+#@list: fs_google hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-google.txt Flowseal: Google and YouTube
+#@list: fs_exclude hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-exclude.txt Flowseal: exclusions
+#
+# How the options of the original batch file were translated (winws -> nfqws2):
+#   --dpi-desync=fake,fakedsplit          -> --lua-desync=fake ... --lua-desync=fakedsplit ...
+#   --dpi-desync-fooling=ts               -> tcp_ts=-600000 (the default step of "ts" in nfqws1).
+#                                            It needs TCP timestamps on the client device: on, by default, in Android, iOS,
+#                                            macOS and Linux; on Windows run "netsh interface tcp set global timestamps=enabled".
+#   --dpi-desync-repeats=6                -> repeats=6
+#   --dpi-desync-fakedsplit-pattern=0x00  -> pattern=0x00 (it is the default, written for clarity); split position 2 is the default too
+#   --ip-id=zero                          -> ip_id=zero
+#   several --dpi-desync-fake-tls         -> several fake instances one after another
+#   fake files                            -> the same files from zapret2's files/fake, except tls_clienthello_www_sferum_ru.bin
+#                                            (not shipped with zapret2): tls_clienthello_vk_com.bin is used instead
+#   --ipset-exclude (private networks)    -> not needed: the router firewall only hands over traffic that leaves for the Internet
+#   Discord voice fake ACTIVE_DISCORD_UDP.bin -> quic_initial_www_google_com.bin (what general (ALT) used before ACTIVE_*)
+#
+# Left out: the profiles with ipset-all.txt (it only holds a never-matching placeholder in the original).
+# The game filter (ports 1024-65535) is in the preset general-alt-games.
+#
+# Empty include lists would mean "match everything" for nfqws2, so the init script keeps every list used in
+# --hostlist=/--ipset= non-empty with a never-matching placeholder until the real data is downloaded.
+--blob=quic_google:@<BASE>/files/fake/quic_initial_www_google_com.bin
+--blob=tls_google:@<BASE>/files/fake/tls_clienthello_www_google_com.bin
+--blob=stun_fake:@<BASE>/files/fake/stun.bin
+--blob=tls_vk:@<BASE>/files/fake/tls_clienthello_vk_com.bin
+# QUIC for the sites of the general list (Discord, Cloudflare, ...)
+--filter-udp=443 --filter-l7=quic --hostlist=<LIST:fs_general> <HOSTLIST_NOAUTO> --hostlist-exclude=<LIST:fs_exclude> --payload=quic_initial --lua-desync=fake:blob=quic_google:repeats=6 --new
+# Discord voice and STUN
+--filter-udp=19294-19344,50000-50100 --filter-l7=discord,stun --payload=stun,discord_ip_discovery --lua-desync=fake:blob=quic_google:repeats=6 --new
+# Discord media servers on the alternative TLS ports
+--filter-tcp=2053,2083,2087,2096,8443 --filter-l7=tls --hostlist-domains=discord.media --payload=tls_client_hello --lua-desync=fake:blob=tls_google:tcp_ts=-600000:repeats=6 --lua-desync=fakedsplit:pos=2:pattern=0x00:tcp_ts=-600000:repeats=6 --new
+# Google and YouTube over TLS (your bypass list still wins)
+--filter-tcp=443 --filter-l7=tls --hostlist=<LIST:fs_google> --hostlist-exclude=<RW>/ipset/zapret-hosts-user-exclude.txt --payload=tls_client_hello --lua-desync=fake:blob=tls_google:tcp_ts=-600000:repeats=6:ip_id=zero --lua-desync=fakedsplit:pos=2:pattern=0x00:tcp_ts=-600000:repeats=6:ip_id=zero --new
+# TLS and HTTP for the sites of the general list and of your own list
+--filter-tcp=80,443 --hostlist=<LIST:fs_general> <HOSTLIST_NOAUTO> --hostlist-exclude=<LIST:fs_exclude> --payload=tls_client_hello --lua-desync=fake:blob=stun_fake:tcp_ts=-600000:repeats=6 --lua-desync=fake:blob=tls_google:tcp_ts=-600000:repeats=6 --payload=http_req --lua-desync=fake:blob=tls_vk:tcp_ts=-600000:repeats=6 --payload=tls_client_hello,http_req --lua-desync=fakedsplit:pos=2:pattern=0x00:tcp_ts=-600000:repeats=6

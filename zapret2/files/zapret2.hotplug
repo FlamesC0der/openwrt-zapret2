@@ -1,0 +1,31 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+#
+# Adapted from init.d/openwrt/90-zapret2 of bol-van/zapret2 (MIT).
+# On interface up/down refresh interface sets of the nftables rules (or restart
+# iptables rules). Only acts while the service is running ($ZAPRET_STATE exists).
+
+ZAPRET=/etc/init.d/zapret2
+
+[ -n "$INTERFACE" ] && [ "$ACTION" = ifup -o "$ACTION" = ifdown ] && [ -x "$ZAPRET" ] && [ -f /var/run/zapret2.started ] && {
+	. /usr/libexec/zapret2/env.sh
+	CUSTOM_DIR="$ZAPRET_RW/init.d/openwrt"
+	zapret_prepare
+	. "$ZAPRET_CONFIG"
+	. "$ZAPRET_BASE/common/base.sh"
+	. "$ZAPRET_BASE/common/fwtype.sh"
+
+	linux_fwtype
+	case "$FWTYPE" in
+		nftables)
+			logger -t zapret2 reloading nftables ifsets due to $ACTION of $INTERFACE
+			"$ZAPRET" reload_ifsets
+			;;
+		iptables)
+			openwrt_fw3 || {
+				logger -t zapret2 reloading iptables due to $ACTION of $INTERFACE
+				"$ZAPRET" restart_fw
+			}
+			;;
+	esac
+}

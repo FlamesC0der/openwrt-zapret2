@@ -1,0 +1,8 @@
+#@name: Alt2 - disorder
+#@description: Segments are sent in reverse order (multidisorder) without fake packets.
+#@description.ru: Сегменты отправляются в обратном порядке (multidisorder) без фейковых пакетов.
+#@tcp_ports: 80,443
+#@udp_ports: 443
+--filter-tcp=80 --filter-l7=http <HOSTLIST> --payload=http_req --lua-desync=multisplit:pos=method+2 --new
+--filter-tcp=443 --filter-l7=tls <HOSTLIST> --payload=tls_client_hello --lua-desync=multidisorder:pos=1,midsld --new
+--filter-udp=443 --filter-l7=quic <HOSTLIST_NOAUTO> --payload=quic_initial --lua-desync=fake:blob=fake_default_quic:repeats=6

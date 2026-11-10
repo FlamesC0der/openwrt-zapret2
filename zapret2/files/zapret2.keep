@@ -1,0 +1,6 @@
+/etc/zapret2/ipset/zapret-hosts-user.txt
+/etc/zapret2/ipset/zapret-hosts-user-exclude.txt
+/etc/zapret2/ipset/zapret-hosts-user-ipban.txt
+/etc/zapret2/lists
+/etc/zapret2/presets/user
+/etc/zapret2/init.d/openwrt/custom.d

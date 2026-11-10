@@ -1,0 +1,38 @@
+#@name: General (ALT) + ports 1024-65535 (games)
+#@description: "General (ALT) - Discord + YouTube" plus the "game filter" of zapret-discord-youtube: all TCP and UDP traffic to ports 1024-65535 is processed too, for any destination (the first 3 TCP and 2 UDP packets of every connection get fakes). Heavy for a router: every new connection to such a port goes through nfqws2, so torrent clients and the like load the CPU. Fakes for TCP need TCP timestamps on the client device and a server that supports them; a server without them gets the fake as real data and drops the connection. Forwarded ports (servers inside your network) are not excluded. Same lists as General (ALT): "fs_general", "fs_google", "fs_exclude".
+#@description.ru: «General (ALT) - Discord + YouTube» плюс «игровой фильтр» из zapret-discord-youtube: весь TCP- и UDP-трафик на порты 1024-65535 тоже обрабатывается, для любых адресов (первые 3 TCP- и 2 UDP-пакета каждого соединения получают фейки). Для роутера это тяжело: каждое новое соединение на такой порт проходит через nfqws2, поэтому торренты и подобное нагружают процессор. Фейки для TCP требуют включённых TCP timestamps на устройстве и сервера с их поддержкой: сервер без них примет фейк за настоящие данные и оборвёт соединение. Проброшенные порты (серверы в вашей сети) не исключаются. Списки те же, что у General (ALT): «fs_general», «fs_google», «fs_exclude».
+#@tcp_ports: 80,443,1024-65535
+#@udp_ports: 443,1024-65535
+#@list: fs_general hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-general.txt Flowseal: general list
+#@list: fs_google hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-google.txt Flowseal: Google and YouTube
+#@list: fs_exclude hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-exclude.txt Flowseal: exclusions
+#
+# The first five profiles are the same as in the preset "general-alt" (see the comments there); only the ports
+# of the preset are wider (the ranges must not overlap: nftables rejects overlapping intervals) and two profiles
+# are added at the end: they correspond to the game-filter profiles of the original batch file.
+#
+# Profiles are tried in order and the first match wins, so the profiles above handle Discord, Google and the
+# sites of the general list first, and everything else on ports 1024-65535 falls through to the last two.
+#   --dpi-desync-any-protocol=1 --dpi-desync-cutoff=n4 -> payload filters incl. "unknown" and --out-range=<n4
+#                                                         (packets 1-3: SYN, ACK and the first data packet)
+#   --dpi-desync-cutoff=n3 (UDP)                       -> --out-range=<n3 (the first two packets)
+#   --dpi-desync-fake-unknown(-udp)                    -> the blobs of the fake instances for payload "unknown"
+#   ipset-all.txt                                      -> no address filter: the router only passes traffic that leaves
+#                                                         for the Internet (private networks are skipped by the firewall rules)
+# The original game profiles carry only ipset filters, no hostlist-exclude: for unknown protocols there is no host
+# name, and nfqws2 never picks a profile with a hostlist when the host is unknown. So the "Bypass zapret" list
+# does not apply to these two profiles.
+# To limit them to some addresses, add --ipset=<LIST:your_list> (a list of kind "ips") to the two last profiles.
+--blob=quic_google:@<BASE>/files/fake/quic_initial_www_google_com.bin
+--blob=tls_google:@<BASE>/files/fake/tls_clienthello_www_google_com.bin
+--blob=stun_fake:@<BASE>/files/fake/stun.bin
+--blob=tls_vk:@<BASE>/files/fake/tls_clienthello_vk_com.bin
+--filter-udp=443 --filter-l7=quic --hostlist=<LIST:fs_general> <HOSTLIST_NOAUTO> --hostlist-exclude=<LIST:fs_exclude> --payload=quic_initial --lua-desync=fake:blob=quic_google:repeats=6 --new
+--filter-udp=19294-19344,50000-50100 --filter-l7=discord,stun --payload=stun,discord_ip_discovery --lua-desync=fake:blob=quic_google:repeats=6 --new
+--filter-tcp=2053,2083,2087,2096,8443 --filter-l7=tls --hostlist-domains=discord.media --payload=tls_client_hello --lua-desync=fake:blob=tls_google:tcp_ts=-600000:repeats=6 --lua-desync=fakedsplit:pos=2:pattern=0x00:tcp_ts=-600000:repeats=6 --new
+--filter-tcp=443 --filter-l7=tls --hostlist=<LIST:fs_google> --hostlist-exclude=<RW>/ipset/zapret-hosts-user-exclude.txt --payload=tls_client_hello --lua-desync=fake:blob=tls_google:tcp_ts=-600000:repeats=6:ip_id=zero --lua-desync=fakedsplit:pos=2:pattern=0x00:tcp_ts=-600000:repeats=6:ip_id=zero --new
+--filter-tcp=80,443 --hostlist=<LIST:fs_general> <HOSTLIST_NOAUTO> --hostlist-exclude=<LIST:fs_exclude> --payload=tls_client_hello --lua-desync=fake:blob=stun_fake:tcp_ts=-600000:repeats=6 --lua-desync=fake:blob=tls_google:tcp_ts=-600000:repeats=6 --payload=http_req --lua-desync=fake:blob=tls_vk:tcp_ts=-600000:repeats=6 --payload=tls_client_hello,http_req --lua-desync=fakedsplit:pos=2:pattern=0x00:tcp_ts=-600000:repeats=6 --new
+# game filter, TCP: any protocol, the first three packets of the connection
+--filter-tcp=1024-65535 --out-range=<n4 --payload=tls_client_hello --lua-desync=fake:blob=stun_fake:tcp_ts=-600000:repeats=6 --lua-desync=fake:blob=tls_google:tcp_ts=-600000:repeats=6 --payload=http_req --lua-desync=fake:blob=tls_vk:tcp_ts=-600000:repeats=6 --payload=unknown --lua-desync=fake:blob=stun_fake:tcp_ts=-600000:repeats=6:payload=unknown --lua-desync=fake:blob=tls_google:tcp_ts=-600000:repeats=6:payload=unknown --payload=known,unknown --lua-desync=fakedsplit:pos=2:pattern=0x00:tcp_ts=-600000:repeats=6:payload=known,unknown --new
+# game filter, UDP: any protocol, the first two packets of the flow
+--filter-udp=1024-65535 --out-range=<n3 --payload=known,unknown --lua-desync=fake:blob=quic_google:repeats=12:payload=known,unknown

@@ -1,0 +1,24 @@
+#@name: Auto - circular
+#@description: Tries several strategies in turn and moves to the next one when connections to a host keep failing (circular orchestrator). Needs incoming packets: keep tcp_pkt_in >= 10.
+#@description.ru: Перебирает несколько стратегий по кругу и переходит к следующей, если соединения с хостом продолжают не удаваться (оркестратор circular). Нужны входящие пакеты: tcp_pkt_in не меньше 10.
+#@tcp_ports: 80,443
+#@udp_ports: 443
+--blob=tls_pat:@<BASE>/files/fake/tls_clienthello_iana_org.bin
+--filter-tcp=80,443 --filter-l7=http,tls <HOSTLIST>
+--out-range=-s34228
+--in-range=-s5556 --lua-desync=circular:fails=4:retrans=2:maxseq=16384
+--in-range=x
+--payload=tls_client_hello
+--lua-desync=fake:blob=fake_default_tls:tcp_md5:tcp_seq=-10000:strategy=1
+--lua-desync=multidisorder:pos=1,midsld:strategy=1
+--lua-desync=multisplit:pos=2:seqovl=336:seqovl_pattern=tls_pat:strategy=2
+--lua-desync=fake:blob=fake_default_tls:ip_autottl=-2,3-20:strategy=3
+--lua-desync=multidisorder:pos=1,midsld:strategy=3
+--payload=http_req
+--lua-desync=fake:blob=fake_default_http:tcp_md5:strategy=1
+--lua-desync=multisplit:pos=method+2:strategy=1
+--lua-desync=multisplit:pos=method+2:seqovl=1:strategy=2
+--lua-desync=fake:blob=fake_default_http:ip_autottl=-2,3-20:strategy=3
+--lua-desync=multisplit:pos=method+2:strategy=3
+--new
+--filter-udp=443 --filter-l7=quic <HOSTLIST_NOAUTO> --payload=quic_initial --lua-desync=fake:blob=fake_default_quic:repeats=6

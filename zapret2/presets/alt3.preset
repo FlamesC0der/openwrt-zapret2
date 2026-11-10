@@ -1,0 +1,9 @@
+#@name: Alt3 - seqovl
+#@description: Split with sequence overlap (seqovl): a hidden fake rides inside real TCP segments, no fooling needed.
+#@description.ru: Разрезание с перекрытием sequence (seqovl): скрытый фейк внутри настоящих TCP-сегментов, fooling не нужен.
+#@tcp_ports: 80,443
+#@udp_ports: 443
+--blob=tls_pat:@<BASE>/files/fake/tls_clienthello_iana_org.bin
+--filter-tcp=80 --filter-l7=http <HOSTLIST> --payload=http_req --lua-desync=multisplit:pos=method+2:seqovl=1 --new
+--filter-tcp=443 --filter-l7=tls <HOSTLIST> --payload=tls_client_hello --lua-desync=multisplit:pos=2:seqovl=336:seqovl_pattern=tls_pat --new
+--filter-udp=443 --filter-l7=quic <HOSTLIST_NOAUTO> --payload=quic_initial --lua-desync=fake:blob=fake_default_quic:repeats=6

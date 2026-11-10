@@ -1,0 +1,65 @@
+{
+	"admin/services/zapret2": {
+		"title": "Zapret2",
+		"order": 60,
+		"action": {
+			"type": "firstchild"
+		},
+		"depends": {
+			"acl": [
+				"luci-app-zapret2"
+			],
+			"uci": {
+				"zapret2": true
+			}
+		}
+	},
+	"admin/services/zapret2/status": {
+		"title": "Status",
+		"order": 10,
+		"action": {
+			"type": "view",
+			"path": "zapret2/status"
+		}
+	},
+	"admin/services/zapret2/presets": {
+		"title": "Presets",
+		"order": 20,
+		"action": {
+			"type": "view",
+			"path": "zapret2/presets"
+		}
+	},
+	"admin/services/zapret2/lists": {
+		"title": "Lists",
+		"order": 30,
+		"action": {
+			"type": "view",
+			"path": "zapret2/lists"
+		}
+	},
+	"admin/services/zapret2/settings": {
+		"title": "Settings",
+		"order": 40,
+		"action": {
+			"type": "view",
+			"path": "zapret2/settings"
+		}
+	},
+	"admin/services/zapret2/blockcheck": {
+		"title": "Strategy test",
+		"order": 50,
+		"action": {
+			"type": "view",
+			"path": "zapret2/blockcheck"
+		}
+	},
+	"admin/services/zapret2/diagnostics": {
+		"title": "Diagnostics",
+		"order": 55,
+		"action": {
+			"type": "view",
+			"path": "zapret2/diagnostics"
+		}
+	}
+}
