@@ -10,7 +10,7 @@ LUCI_TITLE:=LuCI support for zapret2 (DPI bypass)
 LUCI_DEPENDS:=+luci-base +zapret2 +rpcd +rpcd-mod-ucode
 LUCI_PKGARCH:=all
 
-PKG_VERSION:=2.0.0
+PKG_VERSION:=0.1.0
 PKG_RELEASE:=1
 PKG_LICENSE:=MIT
 PKG_MAINTAINER:=openwrt-zapret contributors
