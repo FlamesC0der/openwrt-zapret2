@@ -224,10 +224,11 @@ return view.extend({
 			rows.push(h('div', { 'style': 'margin:.4em 0' }, [
 				(typeof u.url === 'string' && u.url.indexOf('https://github.com/') === 0)
 					? h('a', { 'href': u.url, 'target': '_blank', 'rel': 'noopener noreferrer' }, icons.label('external', _('Open the release page'), 16))
-					: '',
-				' ',
-				_('Download the packages for your router from the release page, copy them to /tmp and install them: "opkg install /tmp/*.ipk" (OpenWrt 24.10 and older) or "apk add --allow-untrusted /tmp/*.apk" (OpenWrt 25.12+).')
+					: ''
 			]));
+			rows.push(h('div', { 'style': 'margin:.4em 0' }, _('To update, run this command on the router. It downloads the latest release and installs it:')));
+			rows.push(h('pre', { 'style': 'margin:.3em 0;font-size:90%;overflow:auto' },
+				'wget -O - https://github.com/' + st.github_repo + '/releases/latest/download/install.sh | sh'));
 		}
 		else if (u && u.ok) {
 			rows.push(h('div', { 'style': 'margin:.4em 0;display:flex;flex-wrap:wrap;gap:.6em;align-items:center' }, [

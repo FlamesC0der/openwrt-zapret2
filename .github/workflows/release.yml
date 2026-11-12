@@ -1,0 +1,225 @@
+# Сборка пакетов под разные роутеры и публикация релиза GitHub.
+#
+# Как выпустить версию:
+#   1. поднимите PKG_VERSION в luci-app-zapret2/Makefile (например 2.1.0) и закоммитьте;
+#   2. git tag v2.1.0 && git push origin v2.1.0
+# Дальше всё автоматически: проверки -> сборка (18 заданий) -> релиз с пакетами, SHA256SUMS и install.sh.
+# Роутеры ставят последнюю версию командой из README (install.sh берёт файлы из releases/latest).
+#
+# Вручную (Actions -> Release -> Run workflow): без тега только собирает пакеты (их можно скачать
+# из артефактов запуска), с тегом ещё и публикует релиз.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Тег релиза, например v2.1.0. Пусто - только собрать, не публиковать"
+        required: false
+        default: ""
+
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
+
+  prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+      publish: ${{ steps.tag.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: tag
+        env:
+          EVENT: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          set -eu
+          if [ "$EVENT" = push ]; then TAG="$REF_NAME"; else TAG="$INPUT_TAG"; fi
+          if [ -z "$TAG" ]; then
+            echo "Тег не задан: пакеты будут только собраны, релиз не публикуется."
+            echo "tag=" >>"$GITHUB_OUTPUT"
+            echo "publish=false" >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          case "$TAG" in
+            v[0-9]*.[0-9]*.[0-9]*) ;;
+            *) echo "::error::тег должен выглядеть как v2.1.0 (получено: $TAG)"; exit 1 ;;
+          esac
+          # проверка обновлений в LuCI сравнивает тег с версией пакета luci-app-zapret2
+          pkg="$(sed -n 's/^PKG_VERSION:=//p' luci-app-zapret2/Makefile)"
+          want="${TAG#v}"
+          want="${want%%-*}"
+          if [ "$want" != "$pkg" ]; then
+            echo "::error::тег $TAG не совпадает с PKG_VERSION=$pkg в luci-app-zapret2/Makefile. Поднимите версию и пересоздайте тег."
+            exit 1
+          fi
+          echo "tag=$TAG" >>"$GITHUB_OUTPUT"
+          echo "publish=true" >>"$GITHUB_OUTPUT"
+
+  build:
+    needs: [checks, prepare]
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        # oldstable = OpenWrt 24.10 (пакеты .ipk), stable = OpenWrt 25.12 (пакеты .apk): build.sh сам берёт
+        # актуальную патч-версию. Платформы выбраны по одной на архитектуру пакетов; пакеты luci-* не зависят
+        # от архитектуры и берутся из одного задания (x86/64) на каждую версию.
+        include:
+          - { openwrt: oldstable, target: x86/64, id: x86-64, noarch: true }
+          - { openwrt: oldstable, target: mediatek/filogic, id: mediatek-filogic }
+          - { openwrt: oldstable, target: ramips/mt7621, id: ramips-mt7621 }
+          - { openwrt: oldstable, target: ath79/generic, id: ath79-generic }
+          - { openwrt: oldstable, target: ipq40xx/generic, id: ipq40xx-generic }
+          - { openwrt: oldstable, target: mvebu/cortexa9, id: mvebu-cortexa9 }
+          - { openwrt: oldstable, target: bcm27xx/bcm2711, id: bcm27xx-bcm2711 }
+          - { openwrt: oldstable, target: rockchip/armv8, id: rockchip-armv8 }
+          - { openwrt: oldstable, target: ipq806x/generic, id: ipq806x-generic }
+          - { openwrt: stable, target: x86/64, id: x86-64, noarch: true }
+          - { openwrt: stable, target: mediatek/filogic, id: mediatek-filogic }
+          - { openwrt: stable, target: ramips/mt7621, id: ramips-mt7621 }
+          - { openwrt: stable, target: ath79/generic, id: ath79-generic }
+          - { openwrt: stable, target: ipq40xx/generic, id: ipq40xx-generic }
+          - { openwrt: stable, target: mvebu/cortexa9, id: mvebu-cortexa9 }
+          - { openwrt: stable, target: bcm27xx/bcm2711, id: bcm27xx-bcm2711 }
+          - { openwrt: stable, target: rockchip/armv8, id: rockchip-armv8 }
+          - { openwrt: stable, target: ipq806x/generic, id: ipq806x-generic }
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Зависимости сборки OpenWrt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential clang flex bison g++ gawk gettext git libncurses-dev libssl-dev \
+            python3 python3-setuptools rsync swig unzip zlib1g-dev file wget curl ca-certificates \
+            zstd xz-utils xsltproc libelf-dev gcc-multilib g++-multilib
+
+      - name: Сборка пакетов (OpenWrt SDK)
+        run: ./build.sh --target "${{ matrix.target }}" --openwrt "${{ matrix.openwrt }}" --out "$PWD/out" --jobs "$(nproc)"
+
+      - name: Имена файлов для релиза
+        env:
+          NOARCH: ${{ matrix.noarch }}
+        run: |
+          set -eu
+          sdk="$(ls -d .build/sdk-*/ | head -n1)"
+          arch="$(sed -n 's/^CONFIG_TARGET_ARCH_PACKAGES="\(.*\)"/\1/p' "$sdk/.config")"
+          if [ -z "$arch" ]; then
+            t="$(ls -d "$sdk"staging_dir/target-* | head -n1)"
+            arch="${t##*/target-}"
+            arch="${arch%_musl*}"
+          fi
+          [ -n "$arch" ] || { echo "::error::не удалось определить архитектуру пакетов"; exit 1; }
+          echo "Архитектура пакетов: $arch"
+
+          mkdir dist
+          for f in out/*; do
+            b="$(basename "$f")"
+            case "$b" in
+              luci-*) [ "${NOARCH:-}" = true ] || continue ;;
+            esac
+            case "$b" in
+              *.ipk) n="$b" ;;
+              *.apk)
+                case "$b" in
+                  luci-*) n="${b%.apk}_all.apk" ;;
+                  *)      n="${b%.apk}_${arch}.apk" ;;
+                esac ;;
+              *) continue ;;
+            esac
+            cp "$f" "dist/$n"
+          done
+          ls -l dist
+          # пакет с бинарником обязан быть, и в его имени - архитектура
+          ls dist | grep -E "^zapret2[_-][0-9].*_${arch}\.(ipk|apk)$" >/dev/null ||
+            { echo "::error::нет пакета zapret2 для $arch"; exit 1; }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pkg-${{ matrix.openwrt }}-${{ matrix.id }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    needs: [prepare, build]
+    if: needs.prepare.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ needs.prepare.outputs.tag }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pkg-*
+          path: release
+          merge-multiple: true
+
+      - name: Проверка набора файлов, контрольные суммы
+        run: |
+          set -eu
+          cd release
+          ls -l
+          # на каждую версию OpenWrt: по одному luci-app и переводу, и пакет zapret2 под каждую архитектуру
+          for ext in ipk apk; do
+            [ "$(ls | grep -cE "^luci-app-zapret2[_-][0-9].*_all\.$ext$")" = 1 ] || { echo "::error::нужен ровно один luci-app-zapret2 (.$ext)"; exit 1; }
+            [ "$(ls | grep -cE "^luci-i18n-zapret2-ru[_-][0-9].*_all\.$ext$")" = 1 ] || { echo "::error::нужен ровно один luci-i18n-zapret2-ru (.$ext)"; exit 1; }
+            [ "$(ls | grep -cE "^zapret2[_-][0-9].*\.$ext$")" = 9 ] || { echo "::error::ожидалось 9 пакетов zapret2 (.$ext)"; exit 1; }
+          done
+          cp ../install.sh install.sh
+          ls | grep -v -e '^SHA256SUMS$' -e '^install\.sh$' | xargs sha256sum > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Описание релиза
+        run: |
+          set -eu
+          prev="$(git describe --tags --abbrev=0 "${TAG}^" 2>/dev/null || true)"
+          {
+            echo "## Установка и обновление"
+            echo
+            echo "Выполните на роутере (по SSH):"
+            echo
+            echo '```sh'
+            echo "wget -O - https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/install.sh | sh"
+            echo '```'
+            echo
+            echo "Скрипт сам определит архитектуру и менеджер пакетов, проверит контрольные суммы и установит последнюю версию."
+            echo "Пакеты \`.ipk\` собраны для OpenWrt 24.10, \`.apk\` — для OpenWrt 25.12. Если для вашей архитектуры файла нет, соберите пакеты сами: \`./build.sh\` (см. README)."
+            echo
+            echo "## Что изменилось"
+            echo
+            if [ -n "$prev" ]; then git log --no-merges --pretty='- %s' "$prev..$TAG"; else git log --no-merges --pretty='- %s' "$TAG"; fi
+          } > notes.md
+          cat notes.md
+
+      - name: Публикация релиза
+        run: |
+          set -eu
+          pre=""
+          case "$TAG" in *-*) pre="--prerelease" ;; esac
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Релиз $TAG уже есть: дополняю файлами"
+            gh release upload "$TAG" release/* --clobber
+          else
+            # shellcheck disable=SC2086
+            gh release create "$TAG" release/* --title "$TAG" --notes-file notes.md --target "$GITHUB_SHA" $pre
+          fi

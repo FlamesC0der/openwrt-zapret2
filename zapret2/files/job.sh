@@ -358,7 +358,8 @@ job_blockcheck()
 # Для каждого хоста из списка проекта:
 #   1. HEAD https://хост/ - жив ли он (таймаут = "нет", другая ошибка = "неизвестно");
 #   2. POST 64 КиБ случайных данных; если соединение зависло - обрыв обнаружен;
-#   3. иначе 10 запросов HEAD с URI по 7 КБ в одном соединении (те же 64 КиБ) - зависание = обрыв обнаружен.
+#   3. иначе 10 запросов HEAD с URI по 7 КБ в одном соединении (те же 64 КиБ) - зависание = обрыв обнаружен;
+#   4. найденный обрыв проверяется ещё раз: если повтор прошёл, результат понижается до "возможно".
 # Результат пишется построчно (TSV) в $DIAG_DIR/on.tsv или off.tsv - по тому, работал ли nfqws2 во время проверки.
 
 DIAG_DIR=/var/run/zapret2-diag
@@ -449,13 +450,35 @@ diag_load_suite()
 	[ "$total" -gt 0 ]
 }
 
+# одна проверка хоста на обрыв: $1 хост, $2 жив ли он (yes|unknown), $3 метка запроса -> no | detected | probably | possible | unlikely
+diag_dpi()
+{
+	local host="$1" alive="$2" tag="$3" t="$DIAG_TIMEOUT" dpi i urls
+
+	curl -s -o /dev/null --http1.1 -m "$t" -X POST -H 'Content-Type: application/octet-stream' \
+		--data-binary "@$DIAG_DIR/body.bin" "https://$host/?t=$tag-p"
+	dpi="$(diag_verdict $? "$alive")"
+	if [ "$dpi" != detected ]; then
+		urls=""
+		i=0
+		while [ $i -lt 10 ]; do
+			urls="$urls https://$host/?x=$DIAG_X&t=$tag-$i"
+			i=$((i + 1))
+		done
+		# одно соединение, запросы подряд; первая же ошибка прекращает проверку
+		curl -s -I --http1.1 -m "$t" --fail-early $urls >/dev/null 2>&1
+		dpi="$(diag_verdict $? "$alive")"
+	fi
+	echo "$dpi"
+}
+
 # $1 номер, $2 id, $3 провайдер, $4 страна, $5 хост, $6 файл результата
 diag_host()
 {
 	local n="$1" id="$2" provider="$3" country="$4" host="$5" out="$6"
-	local alive dpi rc i urls t="$DIAG_TIMEOUT"
+	local alive dpi again
 
-	curl -s -I -o /dev/null --http1.1 -m "$t" "https://$host/?t=$n-$$"
+	curl -s -I -o /dev/null --http1.1 -m "$DIAG_TIMEOUT" "https://$host/?t=$n-$$"
 	case $? in
 		0)  alive=yes ;;
 		28) alive=no ;;
@@ -465,19 +488,12 @@ diag_host()
 	if [ "$alive" = no ]; then
 		dpi=skip
 	else
-		curl -s -o /dev/null --http1.1 -m "$t" -X POST -H 'Content-Type: application/octet-stream' \
-			--data-binary "@$DIAG_DIR/body.bin" "https://$host/?t=$n-$$-p"
-		dpi="$(diag_verdict $? "$alive")"
-		if [ "$dpi" != detected ]; then
-			urls=""
-			i=0
-			while [ $i -lt 10 ]; do
-				urls="$urls https://$host/?x=$DIAG_X&t=$n-$$-$i"
-				i=$((i + 1))
-			done
-			# одно соединение, запросы подряд; первая же ошибка прекращает проверку
-			curl -s -I --http1.1 -m "$t" --fail-early $urls >/dev/null 2>&1
-			dpi="$(diag_verdict $? "$alive")"
+		dpi="$(diag_dpi "$host" "$alive" "$n-$$")"
+		# Настоящий DPI режет соединение каждый раз, а случайный таймаут (перегруженный сервер, лимит запросов)
+		# бывает разовым: найденный обрыв проверяем ещё раз, и если повтор прошёл - результат лишь "возможно".
+		if [ "$dpi" = detected ]; then
+			again="$(diag_dpi "$host" "$alive" "$n-$$-again")"
+			[ "$again" = detected ] || dpi=possible
 		fi
 	fi
 

@@ -1,6 +1,6 @@
 #@name: Alt3 - seqovl
-#@description: Split with sequence overlap (seqovl): a hidden fake rides inside real TCP segments, no fooling needed.
-#@description.ru: Разрезание с перекрытием sequence (seqovl): скрытый фейк внутри настоящих TCP-сегментов, fooling не нужен.
+#@description: Split with sequence overlap, no fakes.
+#@description.ru: Разрезание с перекрытием sequence, без фейков.
 #@tcp_ports: 80,443
 #@udp_ports: 443
 --blob=tls_pat:@<BASE>/files/fake/tls_clienthello_iana_org.bin

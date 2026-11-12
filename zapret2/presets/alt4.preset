@@ -1,6 +1,6 @@
 #@name: Alt4 - fake + autottl
-#@description: Fake packets with an automatically chosen TTL (they die before reaching the server) + splitting.
-#@description.ru: Фейковые пакеты с автоматически подбираемым TTL (до сервера не доходят) + разрезание.
+#@description: Fakes with automatic TTL (they do not reach the server) + split.
+#@description.ru: Фейки с автоподбором TTL (до сервера не доходят) + разрезание.
 #@tcp_ports: 80,443
 #@udp_ports: 443
 --filter-tcp=80 --filter-l7=http <HOSTLIST> --payload=http_req --lua-desync=fake:blob=fake_default_http:ip_autottl=-2,3-20 --lua-desync=multisplit:pos=method+2 --new

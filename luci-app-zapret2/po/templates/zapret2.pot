@@ -984,7 +984,7 @@ msgstr ""
 msgid "Open the release page"
 msgstr ""
 
-msgid "Download the packages for your router from the release page, copy them to /tmp and install them: \"opkg install /tmp/*.ipk\" (OpenWrt 24.10 and older) or \"apk add --allow-untrusted /tmp/*.apk\" (OpenWrt 25.12+)."
+msgid "To update, run this command on the router. It downloads the latest release and installs it:"
 msgstr ""
 
 msgid "up to date"

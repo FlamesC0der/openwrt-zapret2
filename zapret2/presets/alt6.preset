@@ -1,6 +1,6 @@
 #@name: Alt6 - hostfakesplit
-#@description: Replaces the host name with a fake one between real segments (hostfakesplit) with an MD5 option for the fakes.
-#@description.ru: Подмена имени хоста фейковым между настоящими сегментами (hostfakesplit) с MD5-опцией для фейков.
+#@description: Fake host name between the real segments + MD5.
+#@description.ru: Фейковое имя хоста между настоящими сегментами + MD5.
 #@tcp_ports: 80,443
 #@udp_ports: 443
 --filter-tcp=80 --filter-l7=http <HOSTLIST> --payload=http_req --lua-desync=hostfakesplit:tcp_md5 --new

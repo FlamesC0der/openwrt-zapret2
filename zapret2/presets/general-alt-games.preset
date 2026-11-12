@@ -1,11 +1,19 @@
 #@name: General (ALT) + ports 1024-65535 (games)
-#@description: "General (ALT) - Discord + YouTube" plus the "game filter" of zapret-discord-youtube: all TCP and UDP traffic to ports 1024-65535 is processed too, for any destination (the first 3 TCP and 2 UDP packets of every connection get fakes). Heavy for a router: every new connection to such a port goes through nfqws2, so torrent clients and the like load the CPU. Fakes for TCP need TCP timestamps on the client device and a server that supports them; a server without them gets the fake as real data and drops the connection. Forwarded ports (servers inside your network) are not excluded. Same lists as General (ALT): "fs_general", "fs_google", "fs_exclude".
-#@description.ru: «General (ALT) - Discord + YouTube» плюс «игровой фильтр» из zapret-discord-youtube: весь TCP- и UDP-трафик на порты 1024-65535 тоже обрабатывается, для любых адресов (первые 3 TCP- и 2 UDP-пакета каждого соединения получают фейки). Для роутера это тяжело: каждое новое соединение на такой порт проходит через nfqws2, поэтому торренты и подобное нагружают процессор. Фейки для TCP требуют включённых TCP timestamps на устройстве и сервера с их поддержкой: сервер без них примет фейк за настоящие данные и оборвёт соединение. Проброшенные порты (серверы в вашей сети) не исключаются. Списки те же, что у General (ALT): «fs_general», «fs_google», «fs_exclude».
+#@description: General (ALT) + all TCP/UDP ports 1024-65535. Heavy for a router.
+#@description.ru: General (ALT) + весь TCP и UDP на портах 1024-65535. Нагружает роутер.
 #@tcp_ports: 80,443,1024-65535
 #@udp_ports: 443,1024-65535
 #@list: fs_general hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-general.txt Flowseal: general list
 #@list: fs_google hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-google.txt Flowseal: Google and YouTube
 #@list: fs_exclude hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-exclude.txt Flowseal: exclusions
+#
+# WARNINGS
+#  * Heavy for a router: every new connection to a port >= 1024 (torrents and any P2P too) sends its first packets
+#    through nfqws2, and every new UDP flow gets 24 extra packets.
+#  * The fakes of the TCP profile need TCP timestamps on the client device and on the server: a server without them
+#    takes the fake for real data and drops the connection (games and home-made servers may do that).
+#  * Ports forwarded to servers inside your network are not excluded.
+#  * The "Bypass zapret" list does not apply to the two last profiles (see below).
 #
 # The first five profiles are the same as in the preset "general-alt" (see the comments there); only the ports
 # of the preset are wider (the ranges must not overlap: nftables rejects overlapping intervals) and two profiles

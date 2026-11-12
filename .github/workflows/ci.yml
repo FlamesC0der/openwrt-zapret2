@@ -1,0 +1,45 @@
+# Проверки без сборки пакетов: страницы LuCI после JSMin, перевод, синтаксис скриптов.
+# Запускаются на каждый push и pull request, а также перед сборкой релиза (workflow_call).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Страницы LuCI (тот же JSMin, что и при сборке пакета)
+        run: tools/check-js.sh
+
+      - name: Русский перевод (все строки переведены, подстановки совпадают)
+        run: python3 tools/po-sync.py
+
+      - name: Синтаксис скриптов
+        run: |
+          for f in zapret2/files/*.sh zapret2/files/zapret2.init zapret2/files/zapret2.hotplug install.sh tools/check-js.sh; do
+            sh -n "$f" || exit 1
+          done
+          bash -n build.sh
+
+      - name: JSON-файлы
+        run: |
+          python3 - <<'PY'
+          import glob, json
+          files = glob.glob("luci-app-zapret2/root/usr/share/**/*.json", recursive=True) + ["zapret2/files/diag-suite.json"]
+          for f in files:
+              json.load(open(f, encoding="utf-8"))
+          print("JSON ok:", len(files), "files")
+          PY

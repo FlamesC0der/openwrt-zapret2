@@ -1,6 +1,6 @@
 #@name: Discord + YouTube
-#@description: Default TLS and QUIC strategies plus UDP 50000-50100 (Discord voice and STUN) with matching fake packets from zapret2's files/fake.
-#@description.ru: Стратегии TLS и QUIC по умолчанию плюс UDP 50000-50100 (голос Discord и STUN) с подходящими фейками из files/fake zapret2.
+#@description: Default + Discord voice (UDP 50000-50100).
+#@description.ru: Default + голос Discord (UDP 50000-50100).
 #@tcp_ports: 80,443
 #@udp_ports: 443,50000-50100
 --blob=discord_ipd:@<BASE>/files/fake/discord-ip-discovery-with-port.bin

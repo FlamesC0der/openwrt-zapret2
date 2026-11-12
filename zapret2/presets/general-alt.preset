@@ -1,6 +1,6 @@
 #@name: General (ALT) - Discord + YouTube
-#@description: Port of "general (ALT)" from zapret-discord-youtube (Flowseal) to nfqws2: fake + fakedsplit with TCP timestamp fooling, QUIC and Discord voice fakes. Works from lists: the preset adds the lists "fs_general", "fs_google" and "fs_exclude" from that project and downloads them daily; your own sites are added in the filter mode "Only my list". The catch-all ipset profiles are left out; the game filter (ports 1024-65535) is in the preset general-alt-games.
-#@description.ru: Порт «general (ALT)» из zapret-discord-youtube (Flowseal) на nfqws2: fake + fakedsplit с подменой TCP timestamp, фейки для QUIC и голоса Discord. Работает по спискам: пресет добавляет списки «fs_general», «fs_google» и «fs_exclude» из этого проекта и скачивает их ежедневно; свои сайты добавляются в режиме «Только мой список». Профили ipset-all (для всего подряд) не переносились; игровой фильтр (порты 1024-65535) есть в пресете general-alt-games.
+#@description: Port of General (ALT) from zapret-discord-youtube: Discord, YouTube. Downloads the Flowseal lists.
+#@description.ru: Порт General (ALT) из zapret-discord-youtube: Discord, YouTube. Скачивает списки Flowseal.
 #@tcp_ports: 80,443,2053,2083,2087,2096,8443
 #@udp_ports: 443,19294-19344,50000-50100
 #@list: fs_general hosts https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/main/lists/list-general.txt Flowseal: general list

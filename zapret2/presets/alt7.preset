@@ -1,6 +1,6 @@
 #@name: Alt7 - syndata
-#@description: Payload inside the TCP SYN packet (syndata) + splitting. A zero-phase technique: it cannot be limited by hostlists, so it affects every TLS connection.
-#@description.ru: Данные в TCP SYN (syndata) + разрезание. Техника нулевой фазы: не ограничивается хостлистами, действует на все TLS-соединения.
+#@description: Data in SYN + split. Hits all TLS: lists are ignored.
+#@description.ru: Данные в SYN + разрезание. Действует на весь TLS, списки не учитываются.
 #@tcp_ports: 80,443
 #@udp_ports: 443
 --filter-tcp=80 --filter-l7=http <HOSTLIST> --payload=http_req --lua-desync=multisplit:pos=method+2 --new

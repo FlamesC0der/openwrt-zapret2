@@ -1,6 +1,6 @@
 #@name: Auto - circular
-#@description: Tries several strategies in turn and moves to the next one when connections to a host keep failing (circular orchestrator). Needs incoming packets: keep tcp_pkt_in >= 10.
-#@description.ru: Перебирает несколько стратегий по кругу и переходит к следующей, если соединения с хостом продолжают не удаваться (оркестратор circular). Нужны входящие пакеты: tcp_pkt_in не меньше 10.
+#@description: Cycles through strategies while a site keeps failing.
+#@description.ru: Перебирает стратегии по кругу, пока сайт не открывается.
 #@tcp_ports: 80,443
 #@udp_ports: 443
 --blob=tls_pat:@<BASE>/files/fake/tls_clienthello_iana_org.bin

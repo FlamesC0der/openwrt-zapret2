@@ -1,6 +1,6 @@
 #@name: Alt5 - fakedsplit
-#@description: Split with fake segments mixed between the real ones (fakedsplit) and an MD5 option so the server drops the fakes.
-#@description.ru: Разрезание с замешиванием фейковых сегментов между настоящими (fakedsplit) и MD5-опцией, чтобы сервер отбросил фейки.
+#@description: Real and fake segments mixed (fakedsplit) + MD5.
+#@description.ru: Настоящие и фейковые сегменты вперемешку (fakedsplit) + MD5.
 #@tcp_ports: 80,443
 #@udp_ports: 443
 --filter-tcp=80 --filter-l7=http <HOSTLIST> --payload=http_req --lua-desync=fakedsplit:pos=method+2:tcp_md5 --new
