@@ -179,12 +179,18 @@ jobs:
           set -eu
           cd release
           ls -l
-          # на каждую версию OpenWrt: по одному luci-app и переводу, и пакет zapret2 под каждую архитектуру
+          # для каждого собранного формата (.ipk - OpenWrt 24.10, .apk - 25.12): ровно один luci-app и один перевод
+          # и хотя бы один пакет zapret2. Какие версии и платформы собирать, определяет матрица выше; упавшее
+          # задание сборки до этого шага не дойдёт, а каждое задание само проверяет, что его пакет zapret2 получился.
+          found=0
           for ext in ipk apk; do
+            ls | grep -qE "\.$ext$" || continue
+            found=1
             [ "$(ls | grep -cE "^luci-app-zapret2[_-][0-9].*_all\.$ext$")" = 1 ] || { echo "::error::нужен ровно один luci-app-zapret2 (.$ext)"; exit 1; }
             [ "$(ls | grep -cE "^luci-i18n-zapret2-ru[_-][0-9].*_all\.$ext$")" = 1 ] || { echo "::error::нужен ровно один luci-i18n-zapret2-ru (.$ext)"; exit 1; }
-            [ "$(ls | grep -cE "^zapret2[_-][0-9].*\.$ext$")" = 9 ] || { echo "::error::ожидалось 9 пакетов zapret2 (.$ext)"; exit 1; }
+            [ "$(ls | grep -cE "^zapret2[_-][0-9].*\.$ext$")" -ge 1 ] || { echo "::error::нет ни одного пакета zapret2 (.$ext)"; exit 1; }
           done
+          [ "$found" = 1 ] || { echo "::error::нет ни одного пакета"; exit 1; }
           cp ../install.sh install.sh
           ls | grep -v -e '^SHA256SUMS$' -e '^install\.sh$' | xargs sha256sum > SHA256SUMS
           cat SHA256SUMS
@@ -192,7 +198,16 @@ jobs:
       - name: Описание релиза
         run: |
           set -eu
-          prev="$(git describe --tags --abbrev=0 "${TAG}^" 2>/dev/null || true)"
+          # Запуск вручную с новым тегом: самого тега ещё нет (его создаст gh на этом коммите), поэтому
+          # диапазон считаем от коммита, а не от имени тега.
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            end="$TAG"
+            before="${TAG}^"
+          else
+            end="$GITHUB_SHA"
+            before="$GITHUB_SHA"
+          fi
+          prev="$(git describe --tags --abbrev=0 "$before" 2>/dev/null || true)"
           {
             echo "## Установка и обновление"
             echo
@@ -207,7 +222,11 @@ jobs:
             echo
             echo "## Что изменилось"
             echo
-            if [ -n "$prev" ]; then git log --no-merges --pretty='- %s' "$prev..$TAG"; else git log --no-merges --pretty='- %s' "$TAG"; fi
+            if [ -n "$prev" ]; then
+              git log --no-merges --pretty='- %s' "$prev..$end"
+            else
+              echo "- Первый релиз."
+            fi
           } > notes.md
           cat notes.md
 
